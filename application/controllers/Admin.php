@@ -24,7 +24,7 @@ class Admin extends CI_Controller
     {
         // echo "admin dashboard"; die;                       
 
-        $data['title'] = "Dasboard";
+        $data['title'] = "Dashboard";
         $data['menu'] = "dasboard";
         $data['sub_menu'] = null;
         $data['sub_menu_action'] = null;
@@ -413,11 +413,11 @@ class Admin extends CI_Controller
         }
 
         // load view tambah user dengan template admin
-        $this->load->view('template2/admin/header_admin_view', $data);
-        $this->load->view('template2/admin/sidebar_admin_view');
+        $this->load->view('template/admin/header_admin_view', $data);
+        $this->load->view('template/admin/sidebar_admin_view');
         $this->load->view('admin/users_admin_view');
         // $this->load->view('template/admin/control_admin_view');
-        $this->load->view('template2/admin/footer_admin_view');
+        $this->load->view('template/admin/footer_admin_view');
     }
 
     // endpoint untuk all pemberitahuan
@@ -450,12 +450,33 @@ class Admin extends CI_Controller
         $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
         $data['all_laporan'] = $this->Laporan_model->getLaporan('all');
 
+
         // load view tambah user dengan template admin
-        $this->load->view('template/admin/header_admin_view', $data);
-        $this->load->view('template/admin/sidebar_admin_view');
-        $this->load->view('admin/laporan_admin_view');
-        $this->load->view('template/admin/control_admin_view');
-        $this->load->view('template/admin/footer_admin_view');
+        $this->load->view('template2/admin/header_admin_view', $data);
+        $this->load->view('template2/admin/sidebar_admin_view');
+        $this->load->view('admin/laporan_admin_view2');
+        // $this->load->view('template2/admin/control_admin_view');
+        $this->load->view('template2/admin/footer_admin_view');
+    }
+
+    // endpoint untuk detail laporan
+    public function detail_laporan()
+    {
+        $data['title'] = "Semua Laporan";
+        $data['menu'] = "laporan";
+        $data['sub_menu'] = 'semua_laporan';
+        $data['sub_menu_action'] = null;
+        // user data
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+        $data['all_laporan'] = $this->Laporan_model->getLaporan('all');
+
+
+        // load view tambah user dengan template admin
+        $this->load->view('template2/admin/header_admin_view', $data);
+        $this->load->view('template2/admin/sidebar_admin_view');
+        $this->load->view('admin/detail_laporan_admin_view');
+        // $this->load->view('template2/admin/control_admin_view');
+        $this->load->view('template2/admin/footer_admin_view');
     }
 
     // endpoint deleteUser
