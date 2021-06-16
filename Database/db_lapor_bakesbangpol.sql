@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 15, 2021 at 07:42 PM
--- Server version: 10.4.19-MariaDB
--- PHP Version: 7.3.28
+-- Generation Time: Jun 16, 2021 at 11:00 AM
+-- Server version: 10.4.13-MariaDB
+-- PHP Version: 7.3.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,12 +24,26 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tb_dinas`
+--
+
+CREATE TABLE `tb_dinas` (
+  `id_dinas` int(11) NOT NULL,
+  `nama_dinas` varchar(50) NOT NULL,
+  `alamat_dinas` varchar(200) NOT NULL,
+  `logo_dinas` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tb_laporan`
 --
 
 CREATE TABLE `tb_laporan` (
   `id_laporan` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
+  `id_dinas` int(11) NOT NULL,
   `judul` varchar(255) NOT NULL,
   `deskripsi` text NOT NULL,
   `tanggal` date NOT NULL,
@@ -38,21 +52,22 @@ CREATE TABLE `tb_laporan` (
   `lat` double NOT NULL,
   `lng` double NOT NULL,
   `dibuat_pada` int(11) DEFAULT NULL,
-  `diubah_pada` int(11) DEFAULT NULL
+  `diubah_pada` int(11) DEFAULT NULL,
+  `status` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_laporan`
 --
 
-INSERT INTO `tb_laporan` (`id_laporan`, `id_user`, `judul`, `deskripsi`, `tanggal`, `foto`, `alamat`, `lat`, `lng`, `dibuat_pada`, `diubah_pada`) VALUES
-(7, 9, 'Ini Judul dirubah dari web', 'Ini Deskripsi dirubah dari web', '2020-11-16', '4433da76cc3266c6720b88a5282437ed.JPG', 'Jl. Ikan Piranha Atas No.220, Tunjungsekar, Kec. Lowokwaru, Kota Malang, Jawa Timur 65142', -7.931307, 112.637392, 1605622307, 1605623433),
-(8, 9, 'huru hara', 'tes', '2020-11-20', '5fb73f7422b83.png', 'Unnamed Road, Penarukan, Kec. Kepanjen, Malang, Jawa Timur 65163, Indonesia', -8.1416658, 112.57174909999999, 1605844852, NULL),
-(9, 9, 'test', 'jajajjs', '2020-11-23', '5fbb6d136cf33.png', 'Jl. Ikan Piranha Atas Gg. XX No.276, Tunjungsekar, Kec. Lowokwaru, Kota Malang, Jawa Timur 65142, Indonesia', -7.930327, 112.6373381, 1606118675, NULL),
-(10, 7, 'test lagi', 'ini deskripsi dari laporan', '2020-11-23', '5fbb6e0b504c0.png', 'Jl. Ikan Piranha Atas Gg. XX No.276, Tunjungsekar, Kec. Lowokwaru, Kota Malang, Jawa Timur 65142, Indonesia', -7.930327, 112.6373381, 1606118923, NULL),
-(11, 3, 'eqw', 'wrqw', '2021-06-15', '3f0be0f975d91465f785f25d2f31d8ac.png', 'wqewqe', 2424, -124124, 1623738344, NULL),
-(12, 9, 'hh', 'ggg', '2021-06-15', '60c8e05f326d9.png', 'Unnamed Road, Lingkungan Panji, Tegalgede, Kec. Sumbersari, Kabupaten Jember, Jawa Timur 68124, Indonesia', -8.1576877, 113.72292379999999, 1623777375, NULL),
-(13, 9, 'jalan rusak', 'Iki jalan bos', '2021-06-15', '60c8e30f102e9.png', 'Unnamed Road, Lingkungan Panji, Tegalgede, Kec. Sumbersari, Kabupaten Jember, Jawa Timur 68124, Indonesia', -8.1576877, 113.72292379999999, 1623778063, NULL);
+INSERT INTO `tb_laporan` (`id_laporan`, `id_user`, `id_dinas`, `judul`, `deskripsi`, `tanggal`, `foto`, `alamat`, `lat`, `lng`, `dibuat_pada`, `diubah_pada`, `status`) VALUES
+(7, 9, 0, 'Ini Judul dirubah dari web', 'Ini Deskripsi dirubah dari web', '2020-11-16', '4433da76cc3266c6720b88a5282437ed.JPG', 'Jl. Ikan Piranha Atas No.220, Tunjungsekar, Kec. Lowokwaru, Kota Malang, Jawa Timur 65142', -7.931307, 112.637392, 1605622307, 1605623433, ''),
+(8, 9, 0, 'huru hara', 'tes', '2020-11-20', '5fb73f7422b83.png', 'Unnamed Road, Penarukan, Kec. Kepanjen, Malang, Jawa Timur 65163, Indonesia', -8.1416658, 112.57174909999999, 1605844852, NULL, ''),
+(9, 9, 0, 'test', 'jajajjs', '2020-11-23', '5fbb6d136cf33.png', 'Jl. Ikan Piranha Atas Gg. XX No.276, Tunjungsekar, Kec. Lowokwaru, Kota Malang, Jawa Timur 65142, Indonesia', -7.930327, 112.6373381, 1606118675, NULL, ''),
+(10, 7, 0, 'test lagi', 'ini deskripsi dari laporan', '2020-11-23', '5fbb6e0b504c0.png', 'Jl. Ikan Piranha Atas Gg. XX No.276, Tunjungsekar, Kec. Lowokwaru, Kota Malang, Jawa Timur 65142, Indonesia', -7.930327, 112.6373381, 1606118923, NULL, ''),
+(11, 3, 0, 'eqw', 'wrqw', '2021-06-15', '3f0be0f975d91465f785f25d2f31d8ac.png', 'wqewqe', 2424, -124124, 1623738344, NULL, ''),
+(12, 9, 0, 'hh', 'ggg', '2021-06-15', 'jalan-rusak.jpg', 'Unnamed Road, Lingkungan Panji, Tegalgede, Kec. Sumbersari, Kabupaten Jember, Jawa Timur 68124, Indonesia', -8.1576877, 113.72292379999999, 1623777375, NULL, ''),
+(13, 9, 0, 'Jalan Berlubang Cukup Berbahya', 'Jalan Notohadinegoro selatan Bandara Rusak Parah', '2021-06-15', '60c8e30f102e9.png', 'Unnamed Road, Lingkungan Panji, Tegalgede, Kec. Sumbersari, Kabupaten Jember, Jawa Timur 68124, Indonesia', -8.1576877, 113.72292379999999, 1623778063, NULL, '');
 
 -- --------------------------------------------------------
 
@@ -142,7 +157,16 @@ INSERT INTO `tb_login` (`id_login`, `id_user`, `created_at`) VALUES
 (85, 3, 1623776570),
 (86, 9, 1623777256),
 (87, 3, 1623777943),
-(88, 9, 1623778008);
+(88, 9, 1623778008),
+(89, 3, 1623782628),
+(90, 3, 1623787386),
+(91, 3, 1623788616),
+(92, 3, 1623798958),
+(93, 3, 1623801440),
+(94, 3, 1623801906),
+(95, 3, 1623802329),
+(96, 3, 1623821910),
+(97, 3, 1623828484);
 
 -- --------------------------------------------------------
 
@@ -226,13 +250,19 @@ CREATE TABLE `tb_user` (
 --
 
 INSERT INTO `tb_user` (`id_user`, `level`, `username`, `email`, `password`, `telepon`, `nik`, `alamat`, `jenis_kelamin`, `foto`, `dibuat_pada`, `diubah_pada`) VALUES
-(3, 1, 'Sugeng Hariono', 'denih1360@gmail.com', '$2y$10$OL65cSeqKC19n6qAiNqGquPpDYbnbrniRXRN7qnYtCSn8/PsJqknO', '085157764699', '32052523099', 'KEDIRI UWAW', 'Pria', '6abcdfc0d3e22f789807feb9c0b7b9f0.jpg', 1603115574, 1605516130),
-(7, 1, 'Nada', 'nadasthing@gmail.com', '$2y$10$dQZBOSuFp7O8Xo.R2/70FOSXbik/MdqB9UsTnwWcXuBI2Tg15D1sa', '0895387228138', '350999123123', 'JL DIPONEGORO VII NO 73, KALIWATES, JEMBER', 'Pria', '8560a518d4c651413f0f59d90f57f377.jpg', 1605505225, 1605627739),
-(9, 2, 'Miftah Rizqi Azizah', 'buhori100396@gmail.com', '$2y$10$OL65cSeqKC19n6qAiNqGquPpDYbnbrniRXRN7qnYtCSn8/PsJqknO', '0812345676', '3509123332112', 'KALISAT, JEMBER', 'Wanita', 'user-no-image.jpg', 1605508787, NULL);
+(3, 1, 'Erwin Andriandto', 'denih1360@gmail.com', '$2y$10$OL65cSeqKC19n6qAiNqGquPpDYbnbrniRXRN7qnYtCSn8/PsJqknO', '085157764699', '32052523099', 'KEDIRI UWAW', 'Pria', '6abcdfc0d3e22f789807feb9c0b7b9f0.jpg', 1603115574, 1605516130),
+(7, 1, 'Siti Nur', 'nadasthing@gmail.com', '$2y$10$dQZBOSuFp7O8Xo.R2/70FOSXbik/MdqB9UsTnwWcXuBI2Tg15D1sa', '0895387228138', '350999123123', 'JL DIPONEGORO VII NO 73, KALIWATES, JEMBER', 'Pria', '8560a518d4c651413f0f59d90f57f377.jpg', 1605505225, 1605627739),
+(9, 2, 'Haris Passaribu', 'buhori100396@gmail.com', '$2y$10$OL65cSeqKC19n6qAiNqGquPpDYbnbrniRXRN7qnYtCSn8/PsJqknO', '0812345676', '3509123332112', 'KALISAT, JEMBER', 'Wanita', 'user-no-image.jpg', 1605508787, NULL);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `tb_dinas`
+--
+ALTER TABLE `tb_dinas`
+  ADD PRIMARY KEY (`id_dinas`);
 
 --
 -- Indexes for table `tb_laporan`
@@ -273,6 +303,12 @@ ALTER TABLE `tb_user`
 --
 
 --
+-- AUTO_INCREMENT for table `tb_dinas`
+--
+ALTER TABLE `tb_dinas`
+  MODIFY `id_dinas` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `tb_laporan`
 --
 ALTER TABLE `tb_laporan`
@@ -282,7 +318,7 @@ ALTER TABLE `tb_laporan`
 -- AUTO_INCREMENT for table `tb_login`
 --
 ALTER TABLE `tb_login`
-  MODIFY `id_login` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
+  MODIFY `id_login` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT for table `tb_pemberitahuan`
