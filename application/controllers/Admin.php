@@ -71,11 +71,11 @@ class Admin extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             // load view tambah user dengan template admin
-            $this->load->view('template/admin/header_admin_view', $data);
-            $this->load->view('template/admin/sidebar_admin_view');
-            $this->load->view('admin/tambah_user_admin_view');
-            $this->load->view('template/admin/control_admin_view');
-            $this->load->view('template/admin/footer_admin_view');
+            $this->load->view('template2/admin/header_admin_view', $data);
+            $this->load->view('template2/admin/sidebar_admin_view');
+            $this->load->view('admin/tambah_user_admin_view2');
+            // $this->load->view('template/admin/control_admin_view');
+            $this->load->view('template2/admin/footer_admin_view');
         } else {
             if ($_FILES['foto']['error'] != 4) {
                 $image = $this->upload_image('foto', './assets/img/');
@@ -245,11 +245,11 @@ class Admin extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             // load view PROFILE dengan template admin
-            $this->load->view('template/admin/header_admin_view', $data);
-            $this->load->view('template/admin/sidebar_admin_view');
-            $this->load->view('admin/edit_user_admin_view');
-            $this->load->view('template/admin/control_admin_view');
-            $this->load->view('template/admin/footer_admin_view');
+            $this->load->view('template2/admin/header_admin_view', $data);
+            $this->load->view('template2/admin/sidebar_admin_view');
+            $this->load->view('admin/edit_user_admin_view2');
+            // $this->load->view('template2/admin/control_admin_view');
+            $this->load->view('template2/admin/footer_admin_view');
         } else {
             // update thumbnail atatu tidak
             if ($_FILES['foto']['error'] != 4) {
@@ -391,8 +391,8 @@ class Admin extends CI_Controller
         }
     }
 
-    // endpoint untuk all users
-    public function users($level = 'all')
+    // endpoint untuk users
+    public function users($level = 'user')
     {
         $data['title'] = "Semua Pengguna";
         $data['menu'] = "pengguna";
@@ -412,12 +412,13 @@ class Admin extends CI_Controller
             $data['users'] = $this->Auth_model->getUser('level', 2);
         }
 
+
         // load view tambah user dengan template admin
-        $this->load->view('template/admin/header_admin_view', $data);
-        $this->load->view('template/admin/sidebar_admin_view');
-        $this->load->view('admin/users_admin_view');
+        $this->load->view('template2/admin/header_admin_view', $data);
+        $this->load->view('template2/admin/sidebar_admin_view');
+        $this->load->view('admin/users_admin_view2');
         // $this->load->view('template/admin/control_admin_view');
-        $this->load->view('template/admin/footer_admin_view');
+        $this->load->view('template2/admin/footer_admin_view');
     }
 
     // endpoint untuk all pemberitahuan

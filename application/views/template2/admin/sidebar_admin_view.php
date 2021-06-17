@@ -27,7 +27,8 @@
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="./app-profile.html">Data Dinas</a></li>
-                    <li><a href="./app-calender.html">Data User</a></li>
+                    <li><a href="<?= base_url('admin/users'); ?>">Data Akun User</a></li>
+                    <li><a href="./app-calender.html">Data Akun Dinas</a></li>
                 </ul>
             </li>
             <li><a href="<?php echo site_url('Backend/Kelola_Dinas'); ?>" class="ai-icon" aria-expanded="false">

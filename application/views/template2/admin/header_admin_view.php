@@ -733,9 +733,9 @@
                             <li class="nav-item dropdown header-profile">
                                 <a class="nav-link" href="#" role="button" data-toggle="dropdown">
                                     <div class="header-info">
-                                        <span>Hai, <strong>Erwin</strong></span>
+                                        <span>Hai, <strong><?= $user['username']; ?></strong></span>
                                     </div>
-                                    <img src="<?= base_url('assets/admin/'); ?>images/profile/pic1.jpg" width="20" alt="" />
+                                    <img src="<?= base_url('assets/img/') . $user['foto']; ?>" width="20" alt="" />
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a href="<?= base_url('admin/profil'); ?>" class="dropdown-item ai-icon">

@@ -133,6 +133,11 @@
 <script src="<?= base_url('assets/admin/'); ?>vendor/datatables/js/jquery.dataTables.min.js"></script>
 <script src="<?= base_url('assets/admin/'); ?>js/plugins-init/datatables.init.js"></script>
 
+<!-- Jquery Validation -->
+<script src="<?= base_url('assets/admin/'); ?>vendor/jquery-validation/jquery.validate.min.js"></script>
+<!-- Form validate init -->
+<script src="<?= base_url('assets/admin/'); ?>js/plugins-init/jquery.validate-init.js"></script>
+
 </body>
 
 </html>
