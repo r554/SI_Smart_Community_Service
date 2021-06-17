@@ -57,7 +57,7 @@
   												</td>
   												<td>
   													<div class="d-flex">
-  														<a href="<?= base_url('Admin/detail_laporan') ?>" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-eye"></i></a>
+  														<a href="<?= base_url('Admin/detail_laporan/' . $laporan['id_laporan']) ?>" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-eye"></i></a>
   													</div>
   												</td>
   											</tr>

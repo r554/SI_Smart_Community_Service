@@ -24,7 +24,7 @@ class Auth_model extends CI_Model
         $this->db->order_by('id_user', 'DESC');
 
         if ($limit != NULL) {
-            $this->db->limit($limit);  
+            $this->db->limit($limit);
         }
 
         if ($tipe == 'all') {
@@ -34,7 +34,7 @@ class Auth_model extends CI_Model
         if ($tipe == 'all_for_web') {
             $this->db->select('tb_user.*, tb_user.dibuat_pada AS user_dibuat, tb_user.diubah_pada AS user_diubah, COUNT(tb_laporan.id_laporan) AS total_laporan');
             $this->db->from('tb_user');
-            $this->db->join('tb_laporan', 'tb_laporan.id_user = tb_user.id_user');            
+            $this->db->join('tb_laporan', 'tb_laporan.id_user = tb_user.id_user');
             $this->db->group_by('tb_user.id_user');
             return $this->db->get()->result_array();
         }
@@ -42,7 +42,7 @@ class Auth_model extends CI_Model
         if ($tipe == 'id_user') {
             return $this->db->get_where('tb_user', ['id_user' => $param])->row_array();
         }
-        
+
         if ($tipe == 'email') {
             return $this->db->get_where('tb_user', ['email' => $param])->row_array();
         }
