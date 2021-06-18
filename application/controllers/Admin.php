@@ -18,6 +18,7 @@ class Admin extends CI_Controller
         $this->load->model('Pemberitahuan_model');
         $this->load->model('Laporan_model');
         $this->load->model('Track_model');
+        $this->load->model('Dinas_model');
     }
     // endpoint untuk page dashboard
     public function index()
@@ -1721,4 +1722,135 @@ class Admin extends CI_Controller
             return 'no-image.jpg';
         }
     }
+
+    // ===================== Kelola DINAS ============================================== 
+
+    public function tampil_dinas()
+    {
+        $data['title'] = "Data Dinas";
+        $data['data_dinas'] = $this->Dinas_model->getDinas();
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+
+        // load view tambah user dengan template admin
+        $this->load->view('template2/admin/header_admin_view', $data);
+        $this->load->view('template2/admin/sidebar_admin_view');
+        $this->load->view('admin/data_dinas_view');
+        // $this->load->view('template/admin/control_admin_view');
+        $this->load->view('template2/admin/footer_admin_view');
+    }
+
+    // endpoint untuk tambah Dinas
+    public function tambahDinas()
+    {
+        $data['title'] = "Tambah Dinas";
+
+        // user data
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+
+        // form validation config ===============================
+        $this->form_validation->set_rules('dinas', 'dinas', 'required|trim|max_length[50]');
+        $this->form_validation->set_rules('alamat_dinas', 'Alamat_dinas', 'required|trim|max_length[100]');
+        // ===============================
+
+        if ($this->form_validation->run() == FALSE) {
+            // load view tambah user dengan template admin
+            $this->load->view('template2/admin/header_admin_view', $data);
+            $this->load->view('template2/admin/sidebar_admin_view');
+            $this->load->view('admin/tambah_data_dinas_view');
+            // $this->load->view('template/admin/control_admin_view');
+            $this->load->view('template2/admin/footer_admin_view');
+        } else {
+            if ($_FILES['logo_dinas']['error'] != 4) {
+                $image = $this->upload_image('logo_dinas', './assets/img/');
+            } else {
+                $image = 'user-no-image.jpg';
+            }
+
+            $data_dinas = [
+                'nama_dinas' => htmlspecialchars($this->input->post('dinas', true)),
+                'alamat_dinas' => strtoupper(htmlspecialchars($this->input->post('alamat_dinas', true))),
+                'logo_dinas' => $image,
+            ];
+
+            if ($this->Dinas_model->insertDinas($data_dinas)) {
+                $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Berhasil Menambahkan Data Dinas</div>');
+
+                redirect('admin/tambahDinas');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Gagal Menambahkan Data Dinas</div>');
+
+                redirect('admin/tambahDinas');
+            }
+        }
+    }
+
+    // endpoint edit user by id
+    public function editDinas($id_dinas)
+    {
+        $data['title'] = "Edit Data Dinas";
+
+        // user data
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+        $data['dinas_edit'] = $this->Dinas_model->getByDinas($id_dinas);
+
+        // form validation config ===============================
+        $this->form_validation->set_rules('dinas', 'dinas', 'required|trim|max_length[50]');
+        $this->form_validation->set_rules('alamat_dinas', 'Alamat_dinas', 'required|trim|max_length[100]');
+        // ===============================
+
+        if ($this->form_validation->run() == FALSE) {
+            // load view PROFILE dengan template admin
+            $this->load->view('template2/admin/header_admin_view', $data);
+            $this->load->view('template2/admin/sidebar_admin_view');
+            $this->load->view('admin/edit_data_dinas_view');
+            // $this->load->view('template2/admin/control_admin_view');
+            $this->load->view('template2/admin/footer_admin_view');
+        } else {
+            // update thumbnail atatu tidak
+            if ($_FILES['logo_dinas']['error'] != 4) {
+                $image = $this->upload_image('logo_dinas', './assets/img/');
+            } else {
+                $image = $data['dinas_edit']['logo_dinas'];
+            }
+
+
+            $data_user_update = [
+                'nama_dinas' => htmlspecialchars($this->input->post('dinas', true)),
+                'alamat_dinas' => strtoupper(htmlspecialchars($this->input->post('alamat_dinas', true))),
+                'logo_dinas' => $image,
+
+            ];
+
+            if ($this->Dinas_model->updateDinas($data_user_update, $id_dinas)) {
+                $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Berhasil Memperbaharui Data Dinas</div>');
+
+                redirect('admin/tampil_dinas');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Gagal Memperbaharui Data Dinas</div>');
+
+                redirect('admin/tampil_dinas');
+            }
+        }
+    }
+
+    // endpoint deleteUser
+    public function deleteDinas($id_dinas)
+    {
+        // $data['user'] = $this->User_model->getUser($id_user, 'id_user');
+        // ============================================        
+
+        if ($this->Dinas_model->deleteDinas($id_dinas)) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Berhasil Menghapus Data Dinas</div>');
+
+            redirect('admin/tampil_dinas');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Gagal menghapus Data Dinas</div>');
+
+            redirect('admin/tampil_dinas');
+        }
+    }
+
+
+    // ==============================================
+
 }

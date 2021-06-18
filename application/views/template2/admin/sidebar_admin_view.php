@@ -26,7 +26,7 @@
                     <span class="nav-text">Data Master</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="./app-profile.html">Data Dinas</a></li>
+                    <li><a href="<?= base_url('admin/tampil_dinas'); ?>">Data Dinas</a></li>
                     <li><a href="<?= base_url('admin/users'); ?>">Data Akun User</a></li>
                     <li><a href="./app-calender.html">Data Akun Dinas</a></li>
                 </ul>
