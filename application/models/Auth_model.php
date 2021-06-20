@@ -72,4 +72,13 @@ class Auth_model extends CI_Model
     {
         return $this->db->insert('tb_login', $data);
     }
+
+    // Kelola Akun Dinas ==========================================================================
+    public function getUserDinas($param = NULL)
+    {
+        $this->db->order_by('id_user', 'DESC');
+
+        return $this->db->get_where('tb_user', ['level' => $param])->result_array();
+    }
+    // Kelola Akun Dinas ==========================================================================
 }

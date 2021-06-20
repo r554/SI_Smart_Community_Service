@@ -69,6 +69,31 @@ class Auth extends CI_Controller
                         $this->Auth_model->saveLoginLog($login_history);
 
                         redirect('admin');
+                    } elseif ($data_user['level'] > 2) {
+                        // data untuk session
+                        $session_data = [
+                            'id_user' => $data_user['id_user'],
+                            'email' => $data_user['email'],
+                            'level' => $data_user['level'],
+                            'id_dinas' => $data_user['id_dinas'],
+                        ];
+
+                        // data untuk login history
+                        $login_history = [
+                            'id_user' => $data_user['id_user'],
+                            // 'os' => getOS(),
+                            // 'browser' => getBrowser(),
+                            // 'ip' => getUserIP(),
+                            'created_at' => time(),
+                        ];
+
+                        // menyimpan session login
+                        $this->session->set_userdata($session_data);
+
+                        // menyimpan riwayat login
+                        $this->Auth_model->saveLoginLog($login_history);
+
+                        redirect('Admin/tampilDashboard');
                     } else {
                         $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Hanya admin yang dapat mengakses sistem ini.</div>');
                         redirect('login');

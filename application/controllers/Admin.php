@@ -484,7 +484,7 @@ class Admin extends CI_Controller
     public function tolak_pengaduan($id = null)
     {
         $this->_sendWA_Tolak();
-        $status = '3';
+        $status = '7';
         $this->db->set('status', $status);
         $this->db->where('id_laporan', $id);
         $this->db->update('tb_laporan');
@@ -646,6 +646,241 @@ class Admin extends CI_Controller
             }
         }
     }
+
+
+
+    // ================================= Pengaduan Masuk =======================================
+
+    public function Tampil_Pengaduan_Masuk()
+    {
+        $data['title'] = "Pengaduan Masuk";
+        $data['menu'] = "laporan";
+        $data['sub_menu'] = 'semua_laporan';
+        $data['sub_menu_action'] = null;
+        // user data
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+        $data['all_laporan'] = $this->Laporan_model->getPengaduanMasuk();
+
+
+        // load view tambah user dengan template admin
+        $this->load->view('template2/admin/header_admin_view', $data);
+        $this->load->view('template2/admin/sidebar_admin_view');
+        $this->load->view('admin/pengaduan_masuk');
+        // $this->load->view('template2/admin/control_admin_view');
+        $this->load->view('template2/admin/footer_admin_view');
+    }
+
+    public function detail_pengaduan_masuk($id_laporan)
+    {
+        $data['title'] = "Semua Laporan";
+        $data['menu'] = "laporan";
+        $data['sub_menu'] = 'semua_laporan';
+        $data['sub_menu_action'] = null;
+        // user data
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+        $data['detail_laporan'] = $this->Laporan_model->getLaporan('id_laporan', $id_laporan);
+
+        // load view tambah user dengan template admin
+        $this->load->view('template2/admin/header_admin_view', $data);
+        $this->load->view('template2/admin/sidebar_admin_view');
+        $this->load->view('admin/detail_laporan_pengaduan_masuk');
+        // $this->load->view('template2/admin/control_admin_view');
+        $this->load->view('template2/admin/footer_admin_view');
+    }
+
+    public function terima_pengaduan_masuk($id = null)
+    {
+        //$this->_sendWA();
+        $status = '2';
+        $this->db->set('status', $status);
+        $this->db->where('id_laporan', $id);
+        $this->db->update('tb_laporan');
+
+        redirect(site_url('Admin/Tampil_Pengaduan_Masuk'));
+    }
+
+    // ================================= Pengaduan Masuk =======================================
+
+
+
+    // ================================= Memvalidasi Pengaduan =======================================
+    public function Tampil_Validasi_Masuk()
+    {
+        $data['title'] = "Validasi Pengaduan";
+        $data['menu'] = "laporan";
+        $data['sub_menu'] = 'semua_laporan';
+        $data['sub_menu_action'] = null;
+        // user data
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+        $data['all_laporan'] = $this->Laporan_model->getValidasiPengaduan();
+
+
+        // load view tambah user dengan template admin
+        $this->load->view('template2/admin/header_admin_view', $data);
+        $this->load->view('template2/admin/sidebar_admin_view');
+        $this->load->view('admin/memvalidasi_pengaduan');
+        // $this->load->view('template2/admin/control_admin_view');
+        $this->load->view('template2/admin/footer_admin_view');
+    }
+
+    public function detail_validasi_pengaduan($id_laporan)
+    {
+        $data['title'] = "Semua Laporan";
+        $data['menu'] = "laporan";
+        $data['sub_menu'] = 'semua_laporan';
+        $data['sub_menu_action'] = null;
+        // user data
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+        $data['detail_laporan'] = $this->Laporan_model->getLaporan('id_laporan', $id_laporan);
+
+        // load view tambah user dengan template admin
+        $this->load->view('template2/admin/header_admin_view', $data);
+        $this->load->view('template2/admin/sidebar_admin_view');
+        $this->load->view('admin/detail_validasi_pengaduan');
+        // $this->load->view('template2/admin/control_admin_view');
+        $this->load->view('template2/admin/footer_admin_view');
+    }
+
+    public function tindak_lanjut($id = null)
+    {
+        //$this->_sendWA();
+        $status = '5';
+        $this->db->set('status', $status);
+        $this->db->where('id_laporan', $id);
+        $this->db->update('tb_laporan');
+
+        redirect(site_url('Admin/Tampil_Validasi_Masuk'));
+    }
+
+    // ================================= Memvalidasi Pengaduan =======================================
+
+
+
+    // ================================= Pengaduan Diproses =======================================
+    public function Tampil_Pengaduan_Diproses()
+    {
+        $data['title'] = "Validasi Pengaduan";
+        $data['menu'] = "laporan";
+        $data['sub_menu'] = 'semua_laporan';
+        $data['sub_menu_action'] = null;
+        // user data
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+        $data['all_laporan'] = $this->Laporan_model->getPengaduanDiproses();
+
+
+        // load view tambah user dengan template admin
+        $this->load->view('template2/admin/header_admin_view', $data);
+        $this->load->view('template2/admin/sidebar_admin_view');
+        $this->load->view('admin/pengaduan_diproses');
+        // $this->load->view('template2/admin/control_admin_view');
+        $this->load->view('template2/admin/footer_admin_view');
+    }
+
+    public function detail_pengaduan_diproses($id_laporan)
+    {
+        $data['title'] = "Semua Laporan";
+        $data['menu'] = "laporan";
+        $data['sub_menu'] = 'semua_laporan';
+        $data['sub_menu_action'] = null;
+        // user data
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+        $data['detail_laporan'] = $this->Laporan_model->getLaporan('id_laporan', $id_laporan);
+
+        // load view tambah user dengan template admin
+        $this->load->view('template2/admin/header_admin_view', $data);
+        $this->load->view('template2/admin/sidebar_admin_view');
+        $this->load->view('admin/detail_pengaduan_laporan_diproses');
+        // $this->load->view('template2/admin/control_admin_view');
+        $this->load->view('template2/admin/footer_admin_view');
+    }
+    // ================================= Pengaduan Diproses =======================================
+
+
+    // ================================= Pengaduan Dibatalkan =======================================
+    public function Tampil_Pengaduan_Dibatalkan()
+    {
+        $data['title'] = "Validasi Pengaduan";
+        $data['menu'] = "laporan";
+        $data['sub_menu'] = 'semua_laporan';
+        $data['sub_menu_action'] = null;
+        // user data
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+        $data['all_laporan'] = $this->Laporan_model->getPengaduanDibatalkan();
+
+
+        // load view tambah user dengan template admin
+        $this->load->view('template2/admin/header_admin_view', $data);
+        $this->load->view('template2/admin/sidebar_admin_view');
+        $this->load->view('admin/pengaduan_dibatalkan');
+        // $this->load->view('template2/admin/control_admin_view');
+        $this->load->view('template2/admin/footer_admin_view');
+    }
+
+    public function detail_pengaduan_dibatalkan($id_laporan)
+    {
+        $data['title'] = "Semua Laporan";
+        $data['menu'] = "laporan";
+        $data['sub_menu'] = 'semua_laporan';
+        $data['sub_menu_action'] = null;
+        // user data
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+        $data['detail_laporan'] = $this->Laporan_model->getLaporan('id_laporan', $id_laporan);
+
+        // load view tambah user dengan template admin
+        $this->load->view('template2/admin/header_admin_view', $data);
+        $this->load->view('template2/admin/sidebar_admin_view');
+        $this->load->view('admin/detail_laporan_pengaduan_dibatalkan');
+        // $this->load->view('template2/admin/control_admin_view');
+        $this->load->view('template2/admin/footer_admin_view');
+    }
+    // ================================= Pengaduan Dibatalkan =======================================
+
+
+    // ================================= Pengaduan Selesai =======================================
+    public function Tampil_Pengaduan_Selesai()
+    {
+        $data['title'] = "Validasi Pengaduan";
+        $data['menu'] = "laporan";
+        $data['sub_menu'] = 'semua_laporan';
+        $data['sub_menu_action'] = null;
+        // user data
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+        $data['all_laporan'] = $this->Laporan_model->getPengaduanSelesai();
+
+
+        // load view tambah user dengan template admin
+        $this->load->view('template2/admin/header_admin_view', $data);
+        $this->load->view('template2/admin/sidebar_admin_view');
+        $this->load->view('admin/pengaduan_selesai');
+        // $this->load->view('template2/admin/control_admin_view');
+        $this->load->view('template2/admin/footer_admin_view');
+    }
+
+    public function detail_pengaduan_selesai($id_laporan)
+    {
+        $data['title'] = "Semua Laporan";
+        $data['menu'] = "laporan";
+        $data['sub_menu'] = 'semua_laporan';
+        $data['sub_menu_action'] = null;
+        // user data
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+        $data['detail_laporan'] = $this->Laporan_model->getLaporan('id_laporan', $id_laporan);
+        $data['detail_laporan2'] = $this->Laporan_model->getLaporanDetailPengaduan($id_laporan);
+
+        // var_dump($data);
+        // die;
+        // load view tambah user dengan template admin
+        $this->load->view('template2/admin/header_admin_view', $data);
+        $this->load->view('template2/admin/sidebar_admin_view');
+        $this->load->view('admin/detail_laporan_pengaduan_selesai');
+        // $this->load->view('template2/admin/control_admin_view');
+        $this->load->view('template2/admin/footer_admin_view');
+    }
+    // ================================= Pengaduan Selesai =======================================
+
+
+
+
 
     // endpoint deleteUser
     public function deleteUser($id_user)
@@ -1573,11 +1808,11 @@ class Admin extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             // load view PROFILE dengan template            
-            $this->load->view('template/admin/header_admin_view', $data);
-            $this->load->view('template/admin/sidebar_admin_view');
-            $this->load->view('admin/profil_admin_view');
-            $this->load->view('template/admin/control_admin_view');
-            $this->load->view('template/admin/footer_admin_view');
+            $this->load->view('template2/admin/header_admin_view', $data);
+            $this->load->view('template2/admin/sidebar_admin_view');
+            $this->load->view('admin/profil_admin_view2');
+            // $this->load->view('template/admin/control_admin_view');
+            $this->load->view('template2/admin/footer_admin_view');
         } else {
             // cek apakah ada aksi rubah profil
             if ($this->input->post('update_action') == 'profile') {
@@ -1723,7 +1958,7 @@ class Admin extends CI_Controller
         }
     }
 
-    // ===================== Kelola DINAS ============================================== 
+    // ================================ Kelola DINAS ============================================== 
 
     public function tampil_dinas()
     {
@@ -1836,8 +2071,6 @@ class Admin extends CI_Controller
     // endpoint deleteUser
     public function deleteDinas($id_dinas)
     {
-        // $data['user'] = $this->User_model->getUser($id_user, 'id_user');
-        // ============================================        
 
         if ($this->Dinas_model->deleteDinas($id_dinas)) {
             $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Berhasil Menghapus Data Dinas</div>');
@@ -1850,7 +2083,479 @@ class Admin extends CI_Controller
         }
     }
 
+    // ===========================================================================================
 
-    // ==============================================
 
+    // ================================ Kelola Akun DINAS ============================================== 
+    // endpoint untuk users
+    public function tampil_akun_dinas()
+    {
+        $data['title'] = "Semua Pengguna Dinas";
+
+        // user data
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+
+        $data['users'] = $this->Auth_model->getUserDinas('1');
+
+        // load view tambah user dengan template admin
+        $this->load->view('template2/admin/header_admin_view', $data);
+        $this->load->view('template2/admin/sidebar_admin_view');
+        $this->load->view('admin/users_dinas_view');
+        // $this->load->view('template/admin/control_admin_view');
+        $this->load->view('template2/admin/footer_admin_view');
+    }
+
+    public function tambahUserDinas()
+    {
+        $data['title'] = "Tambah Pengguna";
+        $data['menu'] = "pengguna";
+        $data['sub_menu'] = "tambah_pengguna";
+        $data['sub_menu_action'] = null;
+        // user data
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+
+        // form validation config ===============================
+        $this->form_validation->set_rules('username', 'Username', 'required|trim|max_length[50]');
+        $this->form_validation->set_rules('alamat', 'Alamat', 'required|trim|max_length[100]');
+        $this->form_validation->set_rules('level', 'Hak akses', 'required|trim');
+        $this->form_validation->set_rules('jenis_kelamin', 'Jenis kelamin', 'required|trim|max_length[10]');
+        $this->form_validation->set_rules('telepon', 'telepon', 'required|is_unique[tb_user.telepon]|trim|max_length[15]|numeric');
+        $this->form_validation->set_rules('nik', 'NIK', 'required|is_unique[tb_user.nik]|trim|max_length[20]|numeric');
+        $this->form_validation->set_rules('email', 'email', 'required|trim|is_unique[tb_user.email]|valid_email|max_length[100]');
+        $this->form_validation->set_rules('password', 'password', 'required|trim|max_length[50]');
+        $this->form_validation->set_rules('password_confirmation', 'Password Confirmation', 'required|trim|max_length[50]|matches[password]');
+        // ===============================
+
+        if ($this->form_validation->run() == FALSE) {
+            // load view tambah user dengan template admin
+            $this->load->view('template2/admin/header_admin_view', $data);
+            $this->load->view('template2/admin/sidebar_admin_view');
+            $this->load->view('admin/tambah_users_dinas_view');
+            // $this->load->view('template/admin/control_admin_view');
+            $this->load->view('template2/admin/footer_admin_view');
+        } else {
+            if ($_FILES['foto']['error'] != 4) {
+                $image = $this->upload_image('foto', './assets/img/');
+            } else {
+                $image = 'user-no-image.jpg';
+            }
+
+            $data_user = [
+                'username' => htmlspecialchars($this->input->post('username', true)),
+                'alamat' => strtoupper(htmlspecialchars($this->input->post('alamat', true))),
+                'jenis_kelamin' => htmlspecialchars($this->input->post('jenis_kelamin', true)),
+                'telepon' => htmlspecialchars($this->input->post('telepon', true)),
+                'nik' => htmlspecialchars($this->input->post('nik', true)),
+                'email' => htmlspecialchars($this->input->post('email', true)),
+                'level' => htmlspecialchars($this->input->post('level', true)),
+                'password' => password_hash(htmlspecialchars($this->input->post('password', true)), PASSWORD_DEFAULT),
+                'foto' => $image,
+                'dibuat_pada' => time(),
+            ];
+
+            if ($this->Auth_model->insertUser($data_user)) {
+                $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Berhasil mendaftarkan pengguna</div>');
+
+                redirect('admin/tambahUserDinas');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Gagal mendaftarkan pengguna</div>');
+
+                redirect('admin/tambahUserDinas');
+            }
+        }
+    }
+
+    // endpoint deleteUser
+    public function deleteUserDinas($id_user)
+    {
+        // $data['user'] = $this->User_model->getUser($id_user, 'id_user');
+        // ============================================        
+
+        if ($this->Auth_model->deleteUser($id_user)) {
+            $this->session->set_flashdata('message', '<div class="alert alert-info alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Berhasil menghapus Dinas</div>');
+
+            redirect('admin/tampil_akun_dinas');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Gagal menghapus Dinas</div>');
+
+            redirect('admin/tampil_akun_dinas');
+        }
+    }
+    // ================================ Kelola Akun DINAS ============================================== 
+
+
+
+
+
+
+    // =============================== SESI DINAS ====================================================
+    public function tampilDashboard()
+    {
+        // echo "admin dashboard"; die;                       
+
+        $data['title'] = "Dashboard";
+
+        // user data
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+        $data['all_user'] = $this->Auth_model->getUser('all', NULL, '12');
+        // login history data
+        // $data['login_history'] = $this->Login_model->getLatestLoginWithLimit(6);
+        $data['count_laporan'] = count($this->Laporan_model->getLaporan('id_dinas', $this->session->userdata['id_dinas']));
+        $data['count_pemberitahuan'] = count($this->Pemberitahuan_model->getPemberitahuan('all'));
+        $data['count_admin'] = count($this->Auth_model->getUser('level', 1));
+        $data['count_user'] = count($this->Auth_model->getUser('level', 2));
+        $data['all_laporan'] = $this->Laporan_model->getLaporan($this->session->userdata['id_dinas']);
+
+        // load view dashboard dengan template admin
+        $this->load->view('dinas/template/header_admin_view', $data);
+        $this->load->view('dinas/template/sidebar_admin_view');
+        $this->load->view('dinas/dashboard_dinas');
+        // $this->load->view('template2/admin/control_admin_view');
+        $this->load->view('dinas/template/footer_admin_view');
+    }
+
+    public function Tampil_Pengaduan_Masuk_Dinas()
+    {
+        $data['title'] = "Pengaduan Masuk";
+        $data['menu'] = "laporan";
+        $data['sub_menu'] = 'semua_laporan';
+        $data['sub_menu_action'] = null;
+        // user data
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+        $data['all_laporan'] = $this->Laporan_model->getPengaduanMasukByDinas($this->session->userdata['id_dinas']);
+
+
+        // load view tambah user dengan template admin
+        $this->load->view('dinas/template/header_admin_view', $data);
+        $this->load->view('dinas/template/sidebar_admin_view');
+        $this->load->view('dinas/pengaduan_masuk_dinas');
+        // $this->load->view('template2/admin/control_admin_view');
+        $this->load->view('dinas/template/footer_admin_view');
+    }
+
+    public function Detail_Pengaduan_Masuk_Dinas($id_laporan)
+    {
+        $data['title'] = "Semua Laporan";
+        $data['menu'] = "laporan";
+        $data['sub_menu'] = 'semua_laporan';
+        $data['sub_menu_action'] = null;
+        // user data
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+        $data['detail_laporan'] = $this->Laporan_model->getLaporan('id_laporan', $id_laporan);
+
+        // load view tambah user dengan template admin
+        $this->load->view('dinas/template/header_admin_view', $data);
+        $this->load->view('dinas/template/sidebar_admin_view');
+        $this->load->view('dinas/detail_laporan_pengaduan_masuk_dinas');
+        // $this->load->view('template2/admin/control_admin_view');
+        $this->load->view('dinas/template/footer_admin_view');
+    }
+
+    public function laporan_valid($id = null)
+    {
+        // $this->_sendWA();
+        $status = '3';
+        $this->db->set('status', $status);
+        $this->db->where('id_laporan', $id);
+        $this->db->update('tb_laporan');
+
+        redirect(site_url('Admin/Tampil_Pengaduan_Masuk_Dinas'));
+    }
+
+    public function laporan_tidak_valid($id = null)
+    {
+        // $this->_sendWA();
+        $status = '4';
+        $this->db->set('status', $status);
+        $this->db->where('id_laporan', $id);
+        $this->db->update('tb_laporan');
+
+        redirect(site_url('Admin/Tampil_Pengaduan_Masuk_Dinas'));
+    }
+
+    public function Tampil_Tindak_Lanjut()
+    {
+        $data['title'] = "Pengaduan Masuk";
+        $data['menu'] = "laporan";
+        $data['sub_menu'] = 'semua_laporan';
+        $data['sub_menu_action'] = null;
+        // user data
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+        $data['all_laporan'] = $this->Laporan_model->getTindakLanjutByDinas($this->session->userdata['id_dinas']);
+
+
+        // load view tambah user dengan template admin
+        $this->load->view('dinas/template/header_admin_view', $data);
+        $this->load->view('dinas/template/sidebar_admin_view');
+        $this->load->view('dinas/tindak_lanjut');
+        // $this->load->view('template2/admin/control_admin_view');
+        $this->load->view('dinas/template/footer_admin_view');
+    }
+
+    public function Detail_Tindak_Lanjut($id_laporan)
+    {
+        $data['title'] = "Semua Laporan";
+        $data['menu'] = "laporan";
+        $data['sub_menu'] = 'semua_laporan';
+        $data['sub_menu_action'] = null;
+        // user data
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+        $data['detail_laporan'] = $this->Laporan_model->getLaporan('id_laporan', $id_laporan);
+
+        // load view tambah user dengan template admin
+        $this->load->view('dinas/template/header_admin_view', $data);
+        $this->load->view('dinas/template/sidebar_admin_view');
+        $this->load->view('dinas/detail_tindak_lanjut');
+        // $this->load->view('template2/admin/control_admin_view');
+        $this->load->view('dinas/template/footer_admin_view');
+    }
+
+    public function tambah_bukti_selesai()
+    {
+        $data['title'] = "Laporan Selesai";
+        // user data
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+        $data['all_laporan'] = $this->Laporan_model->getTindakLanjutByDinas($this->session->userdata['id_dinas']);
+
+        // ===============================
+
+        if ($_FILES['foto_laporan_selesai']['error'] != 4) {
+            $image = $this->upload_image('foto_laporan_selesai', './assets/img/');
+        } else {
+            $image = 'user-no-image.jpg';
+        }
+
+        $data_user = [
+            'id_laporan' => htmlspecialchars($this->input->post('id_laporan', true)),
+            'tanggal_selesai' => strtoupper(htmlspecialchars($this->input->post('tanggal_selesai', true))),
+            'foto_laporan_selesai' => $image,
+        ];
+
+        $id = htmlspecialchars($this->input->post('id_laporan', true));
+
+        if ($this->Laporan_model->insert_laporan_selesai($data_user)) {
+            $status = '6';
+            $this->db->set('status', $status);
+            $this->db->where('id_laporan', $id);
+            $this->db->update('tb_laporan');
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Bukti Lampiran Berhasil Dikirim</div>');
+            redirect('admin/Tampil_Tindak_Lanjut');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Bukti Lampiran Gagal Dikirim</div>');
+            redirect('admin/Tampil_Tindak_Lanjut');
+        }
+    }
+
+    public function Tampil_Pengaduan_Selesai_Dinas()
+    {
+        $data['title'] = "Pengaduan Selesai";
+        $data['menu'] = "laporan";
+        $data['sub_menu'] = 'semua_laporan';
+        $data['sub_menu_action'] = null;
+        // user data
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+        $data['all_laporan'] = $this->Laporan_model->getPengaduanSelesaiByDinas($this->session->userdata['id_dinas']);
+
+
+        // load view tambah user dengan template admin
+        $this->load->view('dinas/template/header_admin_view', $data);
+        $this->load->view('dinas/template/sidebar_admin_view');
+        $this->load->view('dinas/pengaduan_selesai');
+        // $this->load->view('template2/admin/control_admin_view');
+        $this->load->view('dinas/template/footer_admin_view');
+    }
+
+    public function Detail_Pengaduan_Selesai_Dinas($id_laporan)
+    {
+        $data['title'] = "Semua Laporan";
+        $data['menu'] = "laporan";
+        $data['sub_menu'] = 'semua_laporan';
+        $data['sub_menu_action'] = null;
+        // user data
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+        $data['detail_laporan'] = $this->Laporan_model->getLaporan('id_laporan', $id_laporan);
+
+        // load view tambah user dengan template admin
+        $this->load->view('dinas/template/header_admin_view', $data);
+        $this->load->view('dinas/template/sidebar_admin_view');
+        $this->load->view('dinas/detail_laporan_pengaduan_selesai');
+        // $this->load->view('template2/admin/control_admin_view');
+        $this->load->view('dinas/template/footer_admin_view');
+    }
+
+    public function profil_akun_dinas()
+    {
+        $data['title'] = "Profil";
+        $data['menu'] = "pengaturan";
+        $data['sub_menu'] = "profil";
+        $data['sub_menu_action'] = null;
+
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+
+        // validation config
+        if ($this->input->post('update_action') == 'profile') {
+            // config edit profil
+            $this->form_validation->set_rules('username', 'username', 'required|trim|max_length[50]');
+            $this->form_validation->set_rules('alamat', 'alamat', 'required|trim|max_length[100]');
+            $this->form_validation->set_rules('jenis_kelamin', 'jenis_kelamin', 'required|trim|max_length[10]');
+            $this->form_validation->set_rules('telepon', 'telepon', 'required|trim|max_length[15]|numeric');
+            $this->form_validation->set_rules('nik', 'nik', 'required|trim|max_length[20]|numeric');
+            $this->form_validation->set_rules('email', 'email', 'required|valid_email|max_length[100]');
+        } else {
+            $this->form_validation->set_rules('password_lama', 'Password', 'required|trim|max_length[20]');
+            $this->form_validation->set_rules('password_baru', 'Password', 'required|trim|max_length[20]|min_length[6]');
+            $this->form_validation->set_rules('password_baru', 'Password', 'required|trim|max_length[20]|min_length[6]|matches[password_baru]');
+        }
+
+        if ($this->form_validation->run() == FALSE) {
+            // load view PROFILE dengan template            
+            $this->load->view('dinas/template/header_admin_view', $data);
+            $this->load->view('dinas/template/sidebar_admin_view');
+            $this->load->view('dinas/profil_admin_dinas_view');
+            // $this->load->view('template2/admin/control_admin_view');
+            $this->load->view('dinas/template/footer_admin_view');
+        } else {
+            // cek apakah ada aksi rubah profil
+            if ($this->input->post('update_action') == 'profile') {
+                // update thumbnail atatu tidak
+                if ($_FILES['foto']['error'] != 4) {
+                    $image = $this->upload_image('foto', './assets/img/');
+                } else {
+                    $image = $data['user']['foto'];
+                }
+
+                $data_user_update = [
+                    'username' => htmlspecialchars($this->input->post('username', true)),
+                    'alamat' => strtoupper(htmlspecialchars($this->input->post('alamat', true))),
+                    'jenis_kelamin' => htmlspecialchars($this->input->post('jenis_kelamin', true)),
+                    'telepon' => htmlspecialchars($this->input->post('telepon', true)),
+                    'nik' => htmlspecialchars($this->input->post('nik', true)),
+                    'email' => htmlspecialchars($this->input->post('email', true)),
+                    'foto' => $image,
+                    'diubah_pada' => time(),
+                ];
+
+                if ($this->Auth_model->updateUser('id_user', $data_user_update, $this->session->userdata('id_user'))) {
+                    $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Berhasil mengupdate profil</div>');
+
+                    redirect('admin/profil_akun_dinas');
+                } else {
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Gagal mengupdate profil</div>');
+
+                    redirect('admin/profil_akun_dinas');
+                }
+            } else {
+                $password_lama = htmlspecialchars($this->input->post('password_lama', true));
+                $password_baru = htmlspecialchars($this->input->post('password_baru', true));
+                $password_baru_ver = htmlspecialchars($this->input->post('password_baru_ver', true));
+
+                if (password_verify($password_lama, $data['user']['password'])) {
+                    if ($password_baru !== $password_baru_ver) {
+                        $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Konfirmasi password tidak sesuai</div>');
+
+                        redirect('admin/profil_akun_dinas');
+                    }
+
+                    $password_baru_hash = password_hash($password_baru, PASSWORD_DEFAULT);
+
+                    $data_password = [
+                        'password' => $password_baru_hash,
+                        'diubah_pada' => time(),
+                    ];
+
+                    if ($this->Auth_model->updateUser('id_user', $data_password, $this->session->userdata('id_user'))) {
+                        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Berhasil mengupdate password</div>');
+
+                        redirect('admin/profil_akun_dinas');
+                    } else {
+                        $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Gagal mengupdate password</div>');
+
+                        redirect('admin/profil_akun_dinas');
+                    }
+                } else {
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Password lama salah</div>');
+
+                    redirect('admin/profil_akun_dinas');
+                }
+            }
+        }
+    }
+
+    // =============================== SESI DINAS ====================================================
+
+
+
+    // =============================== SESI LAP ====================================================
+    public function laporann()
+    {
+        $data['title'] = "Tambah Pengguna";
+        $data['menu'] = "pengguna";
+        $data['sub_menu'] = "tambah_pengguna";
+        $data['sub_menu_action'] = null;
+        // user data
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+        $data['tahun'] = $this->Laporan_model->gettahun();
+        $this->load->view('template2/admin/header_admin_view', $data);
+        $this->load->view('template2/admin/sidebar_admin_view');
+        $this->load->view('dinas/laporan');
+        // $this->load->view('template2/admin/control_admin_view');
+        $this->load->view('template2/admin/footer_admin_view');
+    }
+
+    public function filter_laporan()
+    {
+        $data['title'] = "Tambah Pengguna";
+        $data['menu'] = "pengguna";
+        $data['sub_menu'] = "tambah_pengguna";
+        $data['sub_menu_action'] = null;
+        // user data
+
+        $tahun1 = htmlspecialchars($this->input->post('tahun1', true));
+        $bulanawal1 = htmlspecialchars($this->input->post('bulanawal1', true));
+        $bulanakhir = htmlspecialchars($this->input->post('bulanakhir', true));
+
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+        $data['bybulan'] = $this->Laporan_model->filterbybulan($tahun1, $bulanawal1, $bulanakhir);
+
+        // var_dump($data);
+        // die;
+        $this->load->view('dinas/laporan_by_bulan', $data);
+    }
+
+    public function laporanbytanggal()
+    {
+        $data['title'] = "Tambah Pengguna";
+        $data['menu'] = "pengguna";
+        $data['sub_menu'] = "tambah_pengguna";
+        $data['sub_menu_action'] = null;
+        // user data
+
+        $tanggalawal = htmlspecialchars($this->input->post('tanggal_awal', true));
+        $tanggalakhir = htmlspecialchars($this->input->post('tanggal_terakhir', true));
+
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+        $data['bytanggal'] = $this->Laporan_model->filterbytanggal($tanggalawal, $tanggalakhir);
+
+        // var_dump($data);
+        // die;
+        $this->load->view('dinas/laporan_by_tanggal', $data);
+    }
+
+    public function laporanbytahun()
+    {
+        $data['title'] = "Tambah Pengguna";
+        $data['menu'] = "pengguna";
+        $data['sub_menu'] = "tambah_pengguna";
+        $data['sub_menu_action'] = null;
+        // user data
+
+        $tahun2 = htmlspecialchars($this->input->post('tahun2', true));
+
+        $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
+        $data['bytahun'] = $this->Laporan_model->filterbytahun($tahun2);
+
+        // var_dump($data);
+        // die;
+        $this->load->view('dinas/laporan_by_tahun', $data);
+    }
 }

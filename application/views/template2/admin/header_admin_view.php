@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title><?= $title; ?></title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="<?= base_url('assets/admin/'); ?>images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?= base_url() ?>assets/admin/images/logo-pemkab-jember.png">
     <link href="<?= base_url('assets/admin/'); ?>vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url('assets/admin/'); ?>vendor/chartist/css/chartist.min.css">
     <link href="<?= base_url('assets/admin/'); ?>vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
@@ -16,6 +16,11 @@
     <!-- <link href="<?= base_url('assets/admin/'); ?>vendor/owl-carousel/owl.carousel.css" rel="stylesheet"> -->
 
     <link href="<?= base_url('assets/admin/'); ?>vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+
+    <!-- <link href="<?= base_url('assets/admin/'); ?>vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet"> -->
+
+    <!-- <link rel="stylesheet" href="<?= base_url(); ?>assets/sweetalert/css/sweetalert2.min.css">
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/sweetalert/css/animate.min.css"> -->
 
 </head>
 
@@ -44,7 +49,7 @@
             Nav header start
         ***********************************-->
         <div class="nav-header">
-            <a href="<?= base_url('Backend/Dasboard') ?>" class="brand-logo">
+            <a href="<?= base_url('Admin') ?>" class="brand-logo">
                 <!-- <img class="logo-abbr" src="<?= base_url() ?>assets/admin/images/logo.png" alt=""> -->
                 <img class="logo-compact" src="<?= base_url() ?>assets/admin/images/logo.png" alt="">
                 <img class="brand-title" width="500px" height="30px" src="<?= base_url() ?>assets/admin/images/logo.png" alt="">
@@ -63,7 +68,7 @@
         <!--**********************************
             Chat box start
         ***********************************-->
-        <div class="chatbox">
+        <!-- <div class="chatbox">
             <div class="chatbox-close"></div>
             <div class="custom-tab-1">
                 <ul class="nav nav-tabs">
@@ -606,7 +611,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!--**********************************
             Chat box End
         ***********************************-->
@@ -619,7 +624,7 @@
                 <nav class="navbar navbar-expand">
                     <div class="collapse navbar-collapse justify-content-between">
                         <div class="header-left">
-                            <div class="search_bar dropdown show">
+                            <!-- <div class="search_bar dropdown show">
                                 <div class="dropdown-menu p-0 m-0 show">
                                     <form>
                                         <input class="form-control" type="search" placeholder="Search Here" aria-label="Search">
@@ -629,11 +634,11 @@
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M23.7871 22.7761L17.9548 16.9437C19.5193 15.145 20.4665 12.7982 20.4665 10.2333C20.4665 4.58714 15.8741 0 10.2333 0C4.58714 0 0 4.59246 0 10.2333C0 15.8741 4.59246 20.4665 10.2333 20.4665C12.7982 20.4665 15.145 19.5193 16.9437 17.9548L22.7761 23.7871C22.9144 23.9255 23.1007 24 23.2816 24C23.4625 24 23.6488 23.9308 23.7871 23.7871C24.0639 23.5104 24.0639 23.0528 23.7871 22.7761ZM1.43149 10.2333C1.43149 5.38004 5.38004 1.43681 10.2279 1.43681C15.0812 1.43681 19.0244 5.38537 19.0244 10.2333C19.0244 15.0812 15.0812 19.035 10.2279 19.035C5.38004 19.035 1.43149 15.0865 1.43149 10.2333Z" fill="#A4A4A4" /></svg>
                                 </span>
-                            </div>
+                            </div> -->
                         </div>
 
                         <ul class="navbar-nav header-right">
-                            <li class="nav-item dropdown notification_dropdown">
+                            <!-- <li class="nav-item dropdown notification_dropdown">
                                 <a class="nav-link dz-fullscreen primary" href="#">
                                     <svg id="Capa_1" enable-background="new 0 0 482.239 482.239" height="22" viewBox="0 0 482.239 482.239" width="22" xmlns="http://www.w3.org/2000/svg">
                                         <path d="m0 17.223v120.56h34.446v-103.337h103.337v-34.446h-120.56c-9.52 0-17.223 7.703-17.223 17.223z" fill="" />
@@ -729,7 +734,7 @@
                                     </div>
                                     <a class="all-notification" href="#">See all notifications <i class="ti-arrow-right"></i></a>
                                 </div>
-                            </li>
+                            </li> -->
                             <li class="nav-item dropdown header-profile">
                                 <a class="nav-link" href="#" role="button" data-toggle="dropdown">
                                     <div class="header-info">
