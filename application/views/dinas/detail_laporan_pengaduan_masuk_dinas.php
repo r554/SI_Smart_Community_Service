@@ -132,8 +132,8 @@
   									</div>
   									<div class="form-group row">
   										<div class="col-sm-10 text-center">
-  											<a href="<?= base_url('Admin/laporan_valid/') . $detail_laporan['id_laporan'] . '/' . $user['telepon']  ?>"><button type="button" class="btn btn-info btn-md">Laporan Valid</button></a>
-  											<a href="<?= base_url('Admin/laporan_tidak_valid/') . $detail_laporan['id_laporan'] . '/' . $user['telepon'] ?>"><button type="button" class="btn btn-danger btn-md ml-4">Tidak Valid</button></a>
+  											<a href="<?= base_url('Admin/laporan_valid/') . $detail_laporan['id_laporan'] . '/' . $detail_laporan['telepon']  ?>"><button type="button" class="btn btn-info btn-md">Laporan Valid</button></a>
+  											<a href="<?= base_url('Admin/laporan_tidak_valid/') . $detail_laporan['id_laporan'] . '/' . $detail_laporan['telepon'] ?>"><button type="button" class="btn btn-danger btn-md ml-4">Tidak Valid</button></a>
   											<!-- <button type="button" class="btn btn-danger btn-md ml-4" data-toggle="modal" data-target="#TolakPengaduan">Laporan Tidak Valid</button> -->
   											<?php if ($detail_laporan['status'] == 1) { ?>
   												<!-- <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#exampleModalCenter">Validasi Laporan Pada Dinas</button> -->

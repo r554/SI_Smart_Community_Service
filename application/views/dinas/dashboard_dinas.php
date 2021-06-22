@@ -117,6 +117,45 @@
 				<!-- /.row -->
 			</div>
 
+			<div class="row">
+				<div class="col-xl-12 col-xxl-12 col-lg-12 col-md-12">
+					<div id="user-activity" class="card">
+						<div class="card-header border-0 pb-0 d-sm-flex d-block">
+							<div>
+								<h4 class="card-title mb-1">Grafik Pengaduan Masyarakat</h4>
+								<small class="mb-0">Data Pengaduan Masuk</small>
+							</div>
+							<!-- <div class="card-action card-tabs mt-3 mt-sm-0">
+								<ul class="nav nav-tabs" role="tablist">
+									<li class="nav-item">
+										<a class="nav-link active" data-toggle="tab" href="#user" role="tab">
+											Bulan
+										</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" data-toggle="tab" href="#bounce" role="tab">
+											Minggu
+										</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" data-toggle="tab" href="#session-duration" role="tab">
+											Hari
+										</a>
+									</li>
+								</ul>
+							</div> -->
+						</div>
+						<div class="card-body">
+							<div class="tab-content" id="myTabContent">
+								<div class="tab-pane fade show active" id="user" role="tabpanel">
+									<canvas id="activity" class="chartjs"></canvas>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
 		</div>
 		<!--**********************************
             Content body end

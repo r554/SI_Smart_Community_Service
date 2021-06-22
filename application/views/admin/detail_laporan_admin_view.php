@@ -97,7 +97,7 @@
   									<div class="form-group row">
   										<label class="col-sm-3 col-form-label">Nama Pelapor</label>
   										<div class="col-sm-9">
-  											<input type="text" class="form-control" value="<?= $user['username']; ?>" readonly>
+  											<input type="text" class="form-control" value="<?= $detail_laporan['username']; ?>" readonly>
   										</div>
   									</div>
   									<div class="form-group row">

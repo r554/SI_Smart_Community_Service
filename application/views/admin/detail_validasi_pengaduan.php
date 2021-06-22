@@ -133,10 +133,10 @@
   									<div class="form-group row">
   										<div class="col-sm-10 text-center">
   											<?php if ($detail_laporan['status'] == 2) { ?>
-  												<a href="<?= base_url('Admin/tindak_lanjut/') . $detail_laporan['id_laporan'] . '/' . $user['telepon']  ?>"><button type="button" class="btn btn-info btn-md">Tindak Lanjut Pengaduan</button></a>
+  												<a href="<?= base_url('Admin/tindak_lanjut/') . $detail_laporan['id_laporan'] . '/' . $detail_laporan['telepon']  ?>"><button type="button" class="btn btn-info btn-md">Tindak Lanjut Pengaduan</button></a>
   												<button type="button" class="btn btn-danger btn-md ml-4" data-toggle="modal" data-target="#TolakPengaduan">Tolak Pengaduan</button>
   											<?php } elseif ($detail_laporan['status'] == 3) { ?>
-  												<a href="<?= base_url('Admin/tindak_lanjut/') . $detail_laporan['id_laporan'] . '/' . $user['telepon']  ?>"><button type="button" class="btn btn-info btn-md">Tindak Lanjut Pengaduan</button></a>
+  												<a href="<?= base_url('Admin/tindak_lanjut/') . $detail_laporan['id_laporan'] . '/' . $detail_laporan['telepon']  ?>"><button type="button" class="btn btn-info btn-md">Tindak Lanjut Pengaduan</button></a>
   												<button type="button" class="btn btn-danger btn-md ml-4" data-toggle="modal" data-target="#TolakPengaduan">Tolak Pengaduan</button>
   											<?php } elseif ($detail_laporan['status'] == 4) { ?>
   												<button type="button" class="btn btn-danger btn-md ml-4" data-toggle="modal" data-target="#TolakPengaduan">Tolak Pengaduan</button>
@@ -161,7 +161,7 @@
   														</div>
   														<div class="modal-footer">
   															<button type="button" class="btn btn-danger light" data-dismiss="modal">Tutup</button>
-  															<a href="<?= base_url('Admin/terima_pengaduan/') . $detail_laporan['id_laporan'] . '/' . $user['telepon']  ?>"><button type="button" class="btn btn-primary">Lanjutkan</button></a>
+  															<a href="<?= base_url('Admin/terima_pengaduan/') . $detail_laporan['id_laporan'] . '/' . $detail_laporan['telepon']  ?>"><button type="button" class="btn btn-primary">Lanjutkan</button></a>
   														</div>
   													</div>
   												</div>
@@ -184,7 +184,7 @@
   														</div>
   														<div class="modal-footer">
   															<button type="button" class="btn btn-danger light" data-dismiss="modal">Tutup</button>
-  															<a href="<?= base_url('Admin/tolak_pengaduan/') . $detail_laporan['id_laporan'] . '/' . $user['telepon'] ?>"><button type="button" class="btn btn-primary">Lanjutkan</button></a>
+  															<a href="<?= base_url('Admin/tolak_pengaduan/') . $detail_laporan['id_laporan'] . '/' . $detail_laporan['telepon'] ?>"><button type="button" class="btn btn-primary">Lanjutkan</button></a>
   														</div>
   													</div>
   												</div>

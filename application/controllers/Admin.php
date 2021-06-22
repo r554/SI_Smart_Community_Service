@@ -589,7 +589,7 @@ class Admin extends CI_Controller
                 $curl = curl_init();
                 $sender = "628984050435"; // nomor Server 
                 $dest = $hp; // nomor tujuan, pake kode negara 
-                $isiPesan = "Terimakasih sudah Memberikan Pelaporan Pengaduan Terhadap Unit Pelayanan Dinas Kab. Jember <br> Pengaduan Anda Kami Tolak dikarenakan informasi yang anda berikan Tidak Lengkap atau Valid. <br> *Pesan ini Dikirim Otomastis Oleh Sistem* ";
+                $isiPesan = "Terimakasih sudah Memberikan Pelaporan Pengaduan Terhadap Unit Pelayanan Dinas Kab. Jember <br> Pengaduan Anda Kami Tolak dikarenakan informasi yang anda berikan Tidak Lengkap atau Valid.<br>*Pesan ini Dikirim Otomatis Oleh Sistem*";
 
                 curl_setopt_array($curl, array(
 
@@ -690,13 +690,84 @@ class Admin extends CI_Controller
 
     public function terima_pengaduan_masuk($id = null)
     {
-        //$this->_sendWA();
+        $this->_sendWA_user_memvalidasi_pengaduan();
         $status = '2';
         $this->db->set('status', $status);
         $this->db->where('id_laporan', $id);
         $this->db->update('tb_laporan');
 
         redirect(site_url('Admin/Tampil_Pengaduan_Masuk'));
+    }
+
+    private function _sendWA_user_memvalidasi_pengaduan()
+    {
+        $no_penerima = $this->uri->segment('4');
+
+        // cek apakah no hp mengandung karakter + dan 0-9
+        if (!preg_match('/[^+0-9]/', trim($no_penerima))) {
+            // cek apakah no hp karakter 1-3 adalah +62
+            if (substr(trim($no_penerima), 0, 2) == '62') {
+                $hp = trim($no_penerima);
+
+                $curl = curl_init();
+                $sender = "628984050435"; // nomor Server 
+                $dest = $hp; // nomor tujuan, pake kode negara 
+                $isiPesan = "Terimakasih sudah Memberikan Pelaporan Pengaduan Terhadap Unit Pelayanan Dinas Kab. Jember.<br>Pengaduan Anda Sedang Dalam Proses Validasi Oleh Dinas Terkait.";
+
+                curl_setopt_array($curl, array(
+
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_URL => "https://whapi.io/api/send",
+                    CURLOPT_ENCODING => "",
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "POST",
+                    CURLOPT_POSTFIELDS => "{\r\n  \"app\": {\r\n    \"id\": \"$sender\",\r\n    \"time\": \"1605326773\",\r\n    \"data\": {\r\n      \"recipient\": {\r\n        \"id\": \"$dest\"\r\n      },\r\n      \"message\": [\r\n        {\r\n          \"time\": \"1605326773\",\r\n          \"type\": \"text\",\r\n          \"value\": \"$isiPesan\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+                    CURLOPT_HTTPHEADER => array(
+                        "Content-Type: text/plain",
+                        "Cookie: __cfduid=d424776e2d5021b158f1e64c99f2d7fce1604293254; ci_session=3b712ap59vc924a9o15j5rti70gif6k0"
+                    ),
+                ));
+
+                $response = curl_exec($curl);
+
+                curl_close($curl);
+                echo $response;
+            }
+            // cek apakah no hp karakter 1 adalah 0
+            elseif (substr(trim($no_penerima), 0, 1) == '0') {
+                $hp = '62' . substr(trim($no_penerima), 1);
+
+                $curl = curl_init();
+                $sender = "628984050435"; // nomor Server 
+                $dest = $hp; // nomor tujuan, pake kode negara 
+                $isiPesan = "Terimakasih sudah Memberikan Pelaporan Pengaduan Terhadap Unit Pelayanan Dinas Kab. Jember.<br>Pengaduan Anda Sedang Dalam Proses Validasi Oleh Dinas Terkait.";
+
+                curl_setopt_array($curl, array(
+
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_URL => "https://whapi.io/api/send",
+                    CURLOPT_ENCODING => "",
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "POST",
+                    CURLOPT_POSTFIELDS => "{\r\n  \"app\": {\r\n    \"id\": \"$sender\",\r\n    \"time\": \"1605326773\",\r\n    \"data\": {\r\n      \"recipient\": {\r\n        \"id\": \"$dest\"\r\n      },\r\n      \"message\": [\r\n        {\r\n          \"time\": \"1605326773\",\r\n          \"type\": \"text\",\r\n          \"value\": \"$isiPesan\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+                    CURLOPT_HTTPHEADER => array(
+                        "Content-Type: text/plain",
+                        "Cookie: __cfduid=d424776e2d5021b158f1e64c99f2d7fce1604293254; ci_session=3b712ap59vc924a9o15j5rti70gif6k0"
+                    ),
+                ));
+
+                $response = curl_exec($curl);
+
+                curl_close($curl);
+                echo $response;
+            }
+        }
     }
 
     // ================================= Pengaduan Masuk =======================================
@@ -743,7 +814,7 @@ class Admin extends CI_Controller
 
     public function tindak_lanjut($id = null)
     {
-        //$this->_sendWA();
+        $this->_sendWA_TindakLanjutPengaduan();
         $status = '5';
         $this->db->set('status', $status);
         $this->db->where('id_laporan', $id);
@@ -751,6 +822,78 @@ class Admin extends CI_Controller
 
         redirect(site_url('Admin/Tampil_Validasi_Masuk'));
     }
+
+    private function _sendWA_TindakLanjutPengaduan()
+    {
+        $no_penerima = $this->uri->segment('4');
+
+        // cek apakah no hp mengandung karakter + dan 0-9
+        if (!preg_match('/[^+0-9]/', trim($no_penerima))) {
+            // cek apakah no hp karakter 1-3 adalah +62
+            if (substr(trim($no_penerima), 0, 2) == '62') {
+                $hp = trim($no_penerima);
+
+                $curl = curl_init();
+                $sender = "628984050435"; // nomor Server 
+                $dest = $hp; // nomor tujuan, pake kode negara 
+                $isiPesan = "Laporan Pengaduan Anda *Sedang Dalam Proses Tindak Lanjut* Kami Akan terus memberikan informasi terkait kelanjutan laporan pengaduan anda<br>Terimakasih.";
+
+                curl_setopt_array($curl, array(
+
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_URL => "https://whapi.io/api/send",
+                    CURLOPT_ENCODING => "",
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "POST",
+                    CURLOPT_POSTFIELDS => "{\r\n  \"app\": {\r\n    \"id\": \"$sender\",\r\n    \"time\": \"1605326773\",\r\n    \"data\": {\r\n      \"recipient\": {\r\n        \"id\": \"$dest\"\r\n      },\r\n      \"message\": [\r\n        {\r\n          \"time\": \"1605326773\",\r\n          \"type\": \"text\",\r\n          \"value\": \"$isiPesan\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+                    CURLOPT_HTTPHEADER => array(
+                        "Content-Type: text/plain",
+                        "Cookie: __cfduid=d424776e2d5021b158f1e64c99f2d7fce1604293254; ci_session=3b712ap59vc924a9o15j5rti70gif6k0"
+                    ),
+                ));
+
+                $response = curl_exec($curl);
+
+                curl_close($curl);
+                echo $response;
+            }
+            // cek apakah no hp karakter 1 adalah 0
+            elseif (substr(trim($no_penerima), 0, 1) == '0') {
+                $hp = '62' . substr(trim($no_penerima), 1);
+
+                $curl = curl_init();
+                $sender = "628984050435"; // nomor Server 
+                $dest = $hp; // nomor tujuan, pake kode negara 
+                $isiPesan = "Laporan Pengaduan Anda *Sedang Dalam Proses Tindak Lanjut* Kami Akan terus memberikan informasi terkait kelanjutan laporan pengaduan anda<br>Terimakasih.";
+
+                curl_setopt_array($curl, array(
+
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_URL => "https://whapi.io/api/send",
+                    CURLOPT_ENCODING => "",
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "POST",
+                    CURLOPT_POSTFIELDS => "{\r\n  \"app\": {\r\n    \"id\": \"$sender\",\r\n    \"time\": \"1605326773\",\r\n    \"data\": {\r\n      \"recipient\": {\r\n        \"id\": \"$dest\"\r\n      },\r\n      \"message\": [\r\n        {\r\n          \"time\": \"1605326773\",\r\n          \"type\": \"text\",\r\n          \"value\": \"$isiPesan\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+                    CURLOPT_HTTPHEADER => array(
+                        "Content-Type: text/plain",
+                        "Cookie: __cfduid=d424776e2d5021b158f1e64c99f2d7fce1604293254; ci_session=3b712ap59vc924a9o15j5rti70gif6k0"
+                    ),
+                ));
+
+                $response = curl_exec($curl);
+
+                curl_close($curl);
+                echo $response;
+            }
+        }
+    }
+
 
     // ================================= Memvalidasi Pengaduan =======================================
 
@@ -2253,7 +2396,7 @@ class Admin extends CI_Controller
 
     public function laporan_valid($id = null)
     {
-        // $this->_sendWA();
+        $this->_sendWA_LaporanValid();
         $status = '3';
         $this->db->set('status', $status);
         $this->db->where('id_laporan', $id);
@@ -2264,7 +2407,7 @@ class Admin extends CI_Controller
 
     public function laporan_tidak_valid($id = null)
     {
-        // $this->_sendWA();
+        $this->_sendWA_TidakValid();
         $status = '4';
         $this->db->set('status', $status);
         $this->db->where('id_laporan', $id);
@@ -2334,6 +2477,8 @@ class Admin extends CI_Controller
         $id = htmlspecialchars($this->input->post('id_laporan', true));
 
         if ($this->Laporan_model->insert_laporan_selesai($data_user)) {
+            $this->_sendWA_LaporanSelesai();
+            $this->_sendEmail();
             $status = '6';
             $this->db->set('status', $status);
             $this->db->where('id_laporan', $id);
@@ -2343,6 +2488,158 @@ class Admin extends CI_Controller
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Bukti Lampiran Gagal Dikirim</div>');
             redirect('admin/Tampil_Tindak_Lanjut');
+        }
+    }
+
+    private function _sendWA_LaporanSelesai()
+    {
+        $no_penerima = htmlspecialchars($this->input->post('no_user', true));
+
+        // cek apakah no hp mengandung karakter + dan 0-9
+        if (!preg_match('/[^+0-9]/', trim($no_penerima))) {
+            // cek apakah no hp karakter 1-3 adalah +62
+            if (substr(trim($no_penerima), 0, 2) == '62') {
+                $hp = trim($no_penerima);
+
+                $curl = curl_init();
+                $sender = "628984050435"; // nomor Server 
+                $dest = $hp; // nomor tujuan, pake kode negara 
+                $isiPesan = "Terimakasih Sudah Melaporakan Keluhan Anda Pada kami PEMKAB JEMBER.<br>Laporan Pengaduan Anda Telah Selesai / Diperbaiki.";
+
+                curl_setopt_array($curl, array(
+
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_URL => "https://whapi.io/api/send",
+                    CURLOPT_ENCODING => "",
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "POST",
+                    CURLOPT_POSTFIELDS => "{\r\n  \"app\": {\r\n    \"id\": \"$sender\",\r\n    \"time\": \"1605326773\",\r\n    \"data\": {\r\n      \"recipient\": {\r\n        \"id\": \"$dest\"\r\n      },\r\n      \"message\": [\r\n        {\r\n          \"time\": \"1605326773\",\r\n          \"type\": \"text\",\r\n          \"value\": \"$isiPesan\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+                    CURLOPT_HTTPHEADER => array(
+                        "Content-Type: text/plain",
+                        "Cookie: __cfduid=d424776e2d5021b158f1e64c99f2d7fce1604293254; ci_session=3b712ap59vc924a9o15j5rti70gif6k0"
+                    ),
+                ));
+
+                $response = curl_exec($curl);
+
+                curl_close($curl);
+                echo $response;
+            }
+            // cek apakah no hp karakter 1 adalah 0
+            elseif (substr(trim($no_penerima), 0, 1) == '0') {
+                $hp = '62' . substr(trim($no_penerima), 1);
+
+                $curl = curl_init();
+                $sender = "628984050435"; // nomor Server 
+                $dest = $hp; // nomor tujuan, pake kode negara 
+                $isiPesan = "Terimakasih Sudah Melaporakan Keluhan Anda Pada kami PEMKAB JEMBER.<br>Laporan Pengaduan Anda Telah Selesai / Diperbaiki.";
+
+                curl_setopt_array($curl, array(
+
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_URL => "https://whapi.io/api/send",
+                    CURLOPT_ENCODING => "",
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "POST",
+                    CURLOPT_POSTFIELDS => "{\r\n  \"app\": {\r\n    \"id\": \"$sender\",\r\n    \"time\": \"1605326773\",\r\n    \"data\": {\r\n      \"recipient\": {\r\n        \"id\": \"$dest\"\r\n      },\r\n      \"message\": [\r\n        {\r\n          \"time\": \"1605326773\",\r\n          \"type\": \"text\",\r\n          \"value\": \"$isiPesan\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+                    CURLOPT_HTTPHEADER => array(
+                        "Content-Type: text/plain",
+                        "Cookie: __cfduid=d424776e2d5021b158f1e64c99f2d7fce1604293254; ci_session=3b712ap59vc924a9o15j5rti70gif6k0"
+                    ),
+                ));
+
+                $response = curl_exec($curl);
+
+                curl_close($curl);
+                echo $response;
+            }
+        }
+    }
+
+    // Method Untuk Mengirim Email
+    // private function _sendEmail()
+    // {
+    //     $config = [
+    //         'protocol' => 'smtp',
+    //         'smtp_host' => 'ssl://smtp.googlemail.com',
+    //         'smtp_user' => 'amaliacollection87@gmail.com',
+    //         'smtp_pass' => 'indah12345',
+    //         'smtp_port' => '465',
+    //         'mailtype' => 'html',
+    //         'charset' => 'utf-8',
+    //         'newline' => "\r\n"
+    //     ];
+
+    //     $this->load->library('email', $config);
+
+    //     $this->email->from('amaliacollection87@gmail.com', 'Amalia Collection');
+    //     $this->email->to($this->input->post('email'));
+
+    //     $this->email->subject('Konfirmasi Pemesanan');
+    //     //$this->email->message('click : <a href="' . base_url() . 'Lupa_Password/resetpassword?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '">activate</a>');
+
+    //     // Data Array ini untuk mengirim data ke halaman kirim email
+    //     $data = array(
+    //         'no_penerima' => $_POST["no_user"],
+    //         'username' => $_POST["username"],
+    //     );
+
+    //     $body = $this->load->view('dinas/email/v_selesai', $data, true); // Untuk Menggabungkan halaman view ke body pesan
+
+    //     $this->email->message($body); // Isi Pesan dari Email
+
+    //     // Cek Apakah Email Berhasil dikirim apa tidak
+    //     if ($this->email->send()) {
+    //         return true;
+    //     } else {
+    //         //echo $this->email->print_debugger();
+    //         die;
+    //     }
+    // }
+
+    // fungsi proses send email
+    private function _sendEmail()
+    {
+        $config = [
+            'protocol'      => 'smtp',
+            'smtp_host'     => 'ssl://smtp.googlemail.com',
+            'smtp_user'     => 'amaliacollection87@gmail.com',
+            'smtp_pass'     => 'indah12345',
+            'smtp_port'     => 465,
+            'mailtype'      => 'html',
+            'charset'       => 'utf-8',
+            'smtp_crypto'   => 'ssl',
+            'crlf'          => "\r\n",
+            'newline'       => "\r\n"
+        ];
+
+        $this->load->library('email', $config);
+        $this->email->initialize($config);
+
+        $this->email->from('amaliacollection87@gmail.com', 'PELAPORAN APP');
+        $this->email->to('frifqi11@gmail');
+
+        $data = array(
+            'no_penerima' => $_POST["no_user"],
+            'username' => $_POST["username"],
+        );
+
+
+
+        $this->email->subject($data['heading']);
+        $this->email->message('TES');
+
+        if ($this->email->send()) {
+            return true;
+        } else {
+            echo $this->email->print_debugger();
+            return false;
         }
     }
 
@@ -2477,6 +2774,148 @@ class Admin extends CI_Controller
 
                     redirect('admin/profil_akun_dinas');
                 }
+            }
+        }
+    }
+
+    private function _sendWA_LaporanValid()
+    {
+        $no_penerima = $this->uri->segment('4');
+
+        // cek apakah no hp mengandung karakter + dan 0-9
+        if (!preg_match('/[^+0-9]/', trim($no_penerima))) {
+            // cek apakah no hp karakter 1-3 adalah +62
+            if (substr(trim($no_penerima), 0, 2) == '62') {
+                $hp = trim($no_penerima);
+
+                $curl = curl_init();
+                $sender = "628984050435"; // nomor Server 
+                $dest = $hp; // nomor tujuan, pake kode negara 
+                $isiPesan = "Laporan Pengaduan Anda Telah di Validasi Oleh Dinas Terkait, Kami Akan Segera Memperbaiki Kuluhan Anda.<br>Kami Akan Terus Menginformasikan Terkait Pengaduan Yang Anda Laporkan.";
+
+                curl_setopt_array($curl, array(
+
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_URL => "https://whapi.io/api/send",
+                    CURLOPT_ENCODING => "",
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "POST",
+                    CURLOPT_POSTFIELDS => "{\r\n  \"app\": {\r\n    \"id\": \"$sender\",\r\n    \"time\": \"1605326773\",\r\n    \"data\": {\r\n      \"recipient\": {\r\n        \"id\": \"$dest\"\r\n      },\r\n      \"message\": [\r\n        {\r\n          \"time\": \"1605326773\",\r\n          \"type\": \"text\",\r\n          \"value\": \"$isiPesan\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+                    CURLOPT_HTTPHEADER => array(
+                        "Content-Type: text/plain",
+                        "Cookie: __cfduid=d424776e2d5021b158f1e64c99f2d7fce1604293254; ci_session=3b712ap59vc924a9o15j5rti70gif6k0"
+                    ),
+                ));
+
+                $response = curl_exec($curl);
+
+                curl_close($curl);
+                echo $response;
+            }
+            // cek apakah no hp karakter 1 adalah 0
+            elseif (substr(trim($no_penerima), 0, 1) == '0') {
+                $hp = '62' . substr(trim($no_penerima), 1);
+
+                $curl = curl_init();
+                $sender = "628984050435"; // nomor Server 
+                $dest = $hp; // nomor tujuan, pake kode negara 
+                $isiPesan = "Laporan Pengaduan Anda Telah di Validasi Oleh Dinas Terkait, Kami Akan Segera Memperbaiki Kuluhan Anda.<br>Kami Akan Terus Menginformasikan Terkait Pengaduan Yang Anda Laporkan.";
+
+                curl_setopt_array($curl, array(
+
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_URL => "https://whapi.io/api/send",
+                    CURLOPT_ENCODING => "",
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "POST",
+                    CURLOPT_POSTFIELDS => "{\r\n  \"app\": {\r\n    \"id\": \"$sender\",\r\n    \"time\": \"1605326773\",\r\n    \"data\": {\r\n      \"recipient\": {\r\n        \"id\": \"$dest\"\r\n      },\r\n      \"message\": [\r\n        {\r\n          \"time\": \"1605326773\",\r\n          \"type\": \"text\",\r\n          \"value\": \"$isiPesan\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+                    CURLOPT_HTTPHEADER => array(
+                        "Content-Type: text/plain",
+                        "Cookie: __cfduid=d424776e2d5021b158f1e64c99f2d7fce1604293254; ci_session=3b712ap59vc924a9o15j5rti70gif6k0"
+                    ),
+                ));
+
+                $response = curl_exec($curl);
+
+                curl_close($curl);
+                echo $response;
+            }
+        }
+    }
+
+    private function _sendWA_TidakValid()
+    {
+        $no_penerima = $this->uri->segment('4');
+
+        // cek apakah no hp mengandung karakter + dan 0-9
+        if (!preg_match('/[^+0-9]/', trim($no_penerima))) {
+            // cek apakah no hp karakter 1-3 adalah +62
+            if (substr(trim($no_penerima), 0, 2) == '62') {
+                $hp = trim($no_penerima);
+
+                $curl = curl_init();
+                $sender = "628984050435"; // nomor Server 
+                $dest = $hp; // nomor tujuan, pake kode negara 
+                $isiPesan = "Laporan Pengaduan Anda *Tidak Valid* dan Telah di Validasi Oleh Dinas Terkait, Dengan ini Kami Membatalkan Laporan Pengaduan Anda.<br> Silahkan Laporkan Ulang Keluhan Anda dan berikan Keterangan Sebaik Mungkin.<br>Terimakasih.";
+
+                curl_setopt_array($curl, array(
+
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_URL => "https://whapi.io/api/send",
+                    CURLOPT_ENCODING => "",
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "POST",
+                    CURLOPT_POSTFIELDS => "{\r\n  \"app\": {\r\n    \"id\": \"$sender\",\r\n    \"time\": \"1605326773\",\r\n    \"data\": {\r\n      \"recipient\": {\r\n        \"id\": \"$dest\"\r\n      },\r\n      \"message\": [\r\n        {\r\n          \"time\": \"1605326773\",\r\n          \"type\": \"text\",\r\n          \"value\": \"$isiPesan\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+                    CURLOPT_HTTPHEADER => array(
+                        "Content-Type: text/plain",
+                        "Cookie: __cfduid=d424776e2d5021b158f1e64c99f2d7fce1604293254; ci_session=3b712ap59vc924a9o15j5rti70gif6k0"
+                    ),
+                ));
+
+                $response = curl_exec($curl);
+
+                curl_close($curl);
+                echo $response;
+            }
+            // cek apakah no hp karakter 1 adalah 0
+            elseif (substr(trim($no_penerima), 0, 1) == '0') {
+                $hp = '62' . substr(trim($no_penerima), 1);
+
+                $curl = curl_init();
+                $sender = "628984050435"; // nomor Server 
+                $dest = $hp; // nomor tujuan, pake kode negara 
+                $isiPesan = "Laporan Pengaduan Anda *Tidak Valid* dan Telah di Validasi Oleh Dinas Terkait, Dengan ini Kami Membatalkan Laporan Pengaduan Anda.<br> Silahkan Laporakan Ulang Keluhan Anda dan berikan Keterengan Sebaik Mungkin.<br>Terimakasiih.";
+
+                curl_setopt_array($curl, array(
+
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_URL => "https://whapi.io/api/send",
+                    CURLOPT_ENCODING => "",
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "POST",
+                    CURLOPT_POSTFIELDS => "{\r\n  \"app\": {\r\n    \"id\": \"$sender\",\r\n    \"time\": \"1605326773\",\r\n    \"data\": {\r\n      \"recipient\": {\r\n        \"id\": \"$dest\"\r\n      },\r\n      \"message\": [\r\n        {\r\n          \"time\": \"1605326773\",\r\n          \"type\": \"text\",\r\n          \"value\": \"$isiPesan\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+                    CURLOPT_HTTPHEADER => array(
+                        "Content-Type: text/plain",
+                        "Cookie: __cfduid=d424776e2d5021b158f1e64c99f2d7fce1604293254; ci_session=3b712ap59vc924a9o15j5rti70gif6k0"
+                    ),
+                ));
+
+                $response = curl_exec($curl);
+
+                curl_close($curl);
+                echo $response;
             }
         }
     }

@@ -183,6 +183,9 @@
   																<label data-error="wrong" data-success="right" for="form3">Tanggal Selesai</label>
   																<input type="text" name="tanggal_selesai" class="form-control" placeholder="18-06-2021" id="mdate">
   																<input type="hidden" name="id_laporan" id="id_laporan" value="<?php echo $detail_laporan['id_laporan'] ?>">
+  																<input type="hidden" name="no_user" id="no_user" value="<?php echo $detail_laporan['telepon'] ?>">
+  																<input type="hidden" name="email" id="no_user" value="<?php echo $detail_laporan['email'] ?>">
+  																<input type="hidden" name="username" id="no_user" value="<?php echo $detail_laporan['username'] ?>">
   															</div>
 
   															<div class="md-form mb-1">
