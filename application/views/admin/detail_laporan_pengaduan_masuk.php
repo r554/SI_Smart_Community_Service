@@ -133,10 +133,10 @@
   									<div class="form-group row">
   										<div class="col-sm-10 text-center">
   											<?php if ($detail_laporan['status'] == 1) { ?>
-  												<a href="<?= base_url('Admin/terima_pengaduan_masuk/') . $detail_laporan['id_laporan'] . '/' . $user['telepon']  ?>"><button type="button" class="btn btn-info btn-md">Validasi Laporan Pada Dinas</button></a>
+  												<a href="<?= base_url('Admin/terima_pengaduan_masuk/') . $detail_laporan['id_laporan'] . '/' . $user['telepon'] . '/' . $detail_laporan['email']  ?>"><button type="button" class="btn btn-info btn-md">Validasi Laporan Pada Dinas</button></a>
   												<!-- <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#exampleModalCenter">Validasi Laporan Pada Dinas</button> -->
   												<button type="button" class="btn btn-danger btn-md ml-4" data-toggle="modal" data-target="#TolakPengaduan">Tolak Pengaduan</button>
-  												<!-- <a href="<?= base_url('Admin/tolak_pengaduan/') . $detail_laporan['id_laporan'] . '/' . $user['telepon'] ?>"><button type="button" class="btn btn-danger btn-md ml-4" data-toggle="modal" data-target="#exampleModalCenter">Tolak Pengaduan</button></a> -->
+  												<!-- <a href="<?= base_url('Admin/tolak_pengaduan/') . $detail_laporan['id_laporan'] . '/' . $user['telepon'] . '/' . $detail_laporan['email'] ?>"><button type="button" class="btn btn-danger btn-md ml-4" data-toggle="modal" data-target="#exampleModalCenter">Tolak Pengaduan</button></a> -->
   											<?php } ?>
   										</div>
   									</div>
@@ -181,7 +181,7 @@
   														</div>
   														<div class="modal-footer">
   															<button type="button" class="btn btn-danger light" data-dismiss="modal">Tutup</button>
-  															<a href="<?= base_url('Admin/tolak_pengaduan/') . $detail_laporan['id_laporan'] . '/' . $user['telepon'] ?>"><button type="button" class="btn btn-primary">Lanjutkan</button></a>
+  															<a href="<?= base_url('Admin/tolak_pengaduan/') . $detail_laporan['id_laporan'] . '/' . $user['telepon'] . '/' . $detail_laporan['email'] ?>"><button type="button" class="btn btn-primary">Lanjutkan</button></a>
   														</div>
   													</div>
   												</div>
@@ -194,7 +194,7 @@
   					</div>
   				</div>
   				<div class="col-lg-4">
-  					<img src="<?= base_url() . 'assets/img/' . $detail_laporan['foto']; ?>" alt="" class="img-fluid">
+  					<img src="<?= base_url() . 'assets/img/' . $detail_laporan['foto_laporan']; ?>" alt="" class="img-fluid">
   				</div>
   			</div>
 

@@ -48,11 +48,17 @@
   													<?php if ($laporan['status'] == '1') { ?>
   														<span class="badge badge-info">Belum Diproses</span>
   													<?php } elseif ($laporan['status'] == '2') { ?>
-  														<span class="badge badge-warning">Diproses</span>
+  														<span class="badge badge-primary">Memvalidasi</span>
   													<?php } elseif ($laporan['status'] == '3') { ?>
-  														<span class="badge badge-danger">Dibatalkan</span>
+  														<span class="badge badge-dark">Valid</span>
   													<?php } elseif ($laporan['status'] == '4') { ?>
+  														<span class="badge badge-danger">Tidak Valid</span>
+  													<?php } elseif ($laporan['status'] == '5') { ?>
+  														<span class="badge badge-warning">Tindak Lanjut</span>
+  													<?php } elseif ($laporan['status'] == '6') { ?>
   														<span class="badge badge-success">Selesai</span>
+  													<?php } elseif ($laporan['status'] == '7') { ?>
+  														<span class="badge badge-danger">Dibatalkan</span>
   													<?php } ?>
   												</td>
   												<td>

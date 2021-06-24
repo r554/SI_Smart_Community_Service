@@ -46,7 +46,7 @@ class Laporan_model extends CI_Model
         }
 
         if ($tipe == 'id_laporan') {
-            //$this->db->select("tb_user.username, tb_laporan.*, tb_user.*, tb_laporan.alamat AS alamat_laporan, tb_laporan.dibuat_pada AS laporan_dibuat, tb_laporan.foto AS foto_laporan");
+            $this->db->select("tb_laporan.*, tb_user.*, tb_laporan.alamat AS alamat_laporan, tb_laporan.dibuat_pada AS laporan_dibuat, tb_laporan.foto AS foto_laporan");
             $this->db->from('tb_laporan');
             $this->db->join('tb_user', 'tb_user.id_user = tb_laporan.id_user');
             $this->db->where('id_laporan', $param);

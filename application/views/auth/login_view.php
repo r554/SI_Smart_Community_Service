@@ -5,7 +5,7 @@
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
-      <p class="login-box-msg">Log in to start your session</p>
+      <p class="login-box-msg">Login Smart Community Service</p>
 
       <?= $this->session->flashdata('message'); ?>
 
@@ -38,7 +38,7 @@
       </form>
 
       <p class="mb-1">
-        <a href="<?= base_url('forgotpassword'); ?>">I forgot my password</a>
+        <a href="<?= base_url('forgotpassword'); ?>">Lupa Password?</a>
       </p>
       <!-- <p class="mb-0">
         <a href="<?= base_url('registration'); ?>" class="text-center">Register a new membership</a>

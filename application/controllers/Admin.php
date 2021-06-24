@@ -483,6 +483,7 @@ class Admin extends CI_Controller
     // endpoint Tolak Pengaduan
     public function tolak_pengaduan($id = null)
     {
+        $this->_sendEmail_TolakPengaduanMasuk();
         $this->_sendWA_Tolak();
         $status = '7';
         $this->db->set('status', $status);
@@ -490,6 +491,50 @@ class Admin extends CI_Controller
         $this->db->update('tb_laporan');
 
         redirect(site_url('Admin/laporan'));
+    }
+
+    private function _sendEmail_TolakPengaduanMasuk()
+    {
+        $config = [
+            'protocol'      => 'smtp',
+            'smtp_host'     => 'step-ap.online',
+            'smtp_user'     => 'admin@step-ap.online',
+            'smtp_pass'     => 'Stepapon@2020',
+            'smtp_port'     => 465,
+            'mailtype'      => 'html',
+            'charset'       => 'utf-8',
+            'smtp_crypto'   => 'ssl',
+            'crlf'          => "\r\n",
+            'newline'       => "\r\n"
+        ];
+
+        $this->load->library('email', $config);
+        $this->email->initialize($config);
+
+        $this->email->from('admin@step-ap.online', 'Pemkab Jember');
+        $email_penerima = $this->uri->segment('5');
+        $this->email->to($email_penerima);
+
+        $this->email->subject('Informasi Pengaduan');
+        //$this->email->message('click : <a href="' . base_url() . 'Lupa_Password/resetpassword?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '">activate</a>');
+
+        // Data Array ini untuk mengirim data ke halaman kirim email
+        // $data = array(
+        //     'no_penerima' => $_POST["no_user"],
+        //     'username' => $_POST["username"],
+        // );
+
+        //$body = $this->load->view('dinas/email/v_selesai', $data, true); // Untuk Menggabungkan halaman view ke body pesan
+
+        $this->email->message("Terimakasih sudah Memberikan Pelaporan Pengaduan Terhadap Unit Pelayanan Dinas Kab. Jember <br> Pengaduan Anda Kami Tolak dikarenakan informasi yang anda berikan Tidak Lengkap atau Valid.<br>*Pesan ini Dikirim Otomatis Oleh Sistem"); // Isi Pesan dari Email
+
+        // Cek Apakah Email Berhasil dikirim apa tidak
+        if ($this->email->send()) {
+            return true;
+        } else {
+            echo $this->email->print_debugger();
+            die;
+        }
     }
 
     // endpoint Terima Pengaduan
@@ -672,13 +717,14 @@ class Admin extends CI_Controller
 
     public function detail_pengaduan_masuk($id_laporan)
     {
-        $data['title'] = "Semua Laporan";
+        $data['title'] = "Pengaduan Masuk";
         $data['menu'] = "laporan";
         $data['sub_menu'] = 'semua_laporan';
         $data['sub_menu_action'] = null;
         // user data
         $data['user'] = $this->Auth_model->getUser('id_user', $this->session->userdata['id_user']);
         $data['detail_laporan'] = $this->Laporan_model->getLaporan('id_laporan', $id_laporan);
+
 
         // load view tambah user dengan template admin
         $this->load->view('template2/admin/header_admin_view', $data);
@@ -690,6 +736,7 @@ class Admin extends CI_Controller
 
     public function terima_pengaduan_masuk($id = null)
     {
+        $this->_sendEmail_TerimaPengaduanMasuk();
         $this->_sendWA_user_memvalidasi_pengaduan();
         $status = '2';
         $this->db->set('status', $status);
@@ -697,6 +744,50 @@ class Admin extends CI_Controller
         $this->db->update('tb_laporan');
 
         redirect(site_url('Admin/Tampil_Pengaduan_Masuk'));
+    }
+
+    private function _sendEmail_TerimaPengaduanMasuk()
+    {
+        $config = [
+            'protocol'      => 'smtp',
+            'smtp_host'     => 'step-ap.online',
+            'smtp_user'     => 'admin@step-ap.online',
+            'smtp_pass'     => 'Stepapon@2020',
+            'smtp_port'     => 465,
+            'mailtype'      => 'html',
+            'charset'       => 'utf-8',
+            'smtp_crypto'   => 'ssl',
+            'crlf'          => "\r\n",
+            'newline'       => "\r\n"
+        ];
+
+        $this->load->library('email', $config);
+        $this->email->initialize($config);
+
+        $this->email->from('admin@step-ap.online', 'Pemkab Jember');
+        $email_penerima = $this->uri->segment('5');
+        $this->email->to($email_penerima);
+
+        $this->email->subject('Informasi Pengaduan');
+        //$this->email->message('click : <a href="' . base_url() . 'Lupa_Password/resetpassword?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '">activate</a>');
+
+        // Data Array ini untuk mengirim data ke halaman kirim email
+        // $data = array(
+        //     'no_penerima' => $_POST["no_user"],
+        //     'username' => $_POST["username"],
+        // );
+
+        //$body = $this->load->view('dinas/email/v_selesai', $data, true); // Untuk Menggabungkan halaman view ke body pesan
+
+        $this->email->message("Terimakasih sudah Memberikan Pelaporan Pengaduan Terhadap Unit Pelayanan Dinas Kab. Jember.<br>Pengaduan Anda Sedang Dalam Proses Validasi Oleh Dinas Terkait."); // Isi Pesan dari Email
+
+        // Cek Apakah Email Berhasil dikirim apa tidak
+        if ($this->email->send()) {
+            return true;
+        } else {
+            echo $this->email->print_debugger();
+            die;
+        }
     }
 
     private function _sendWA_user_memvalidasi_pengaduan()
@@ -796,7 +887,7 @@ class Admin extends CI_Controller
 
     public function detail_validasi_pengaduan($id_laporan)
     {
-        $data['title'] = "Semua Laporan";
+        $data['title'] = "Validasi Pengaduan";
         $data['menu'] = "laporan";
         $data['sub_menu'] = 'semua_laporan';
         $data['sub_menu_action'] = null;
@@ -814,6 +905,9 @@ class Admin extends CI_Controller
 
     public function tindak_lanjut($id = null)
     {
+
+        $this->_sendEmail_TindakLanjut();
+        die;
         $this->_sendWA_TindakLanjutPengaduan();
         $status = '5';
         $this->db->set('status', $status);
@@ -821,6 +915,50 @@ class Admin extends CI_Controller
         $this->db->update('tb_laporan');
 
         redirect(site_url('Admin/Tampil_Validasi_Masuk'));
+    }
+
+    private function _sendEmail_TindakLanjut()
+    {
+        $config = [
+            'protocol'      => 'smtp',
+            'smtp_host'     => 'step-ap.online',
+            'smtp_user'     => 'admin@step-ap.online',
+            'smtp_pass'     => 'Stepapon@2020',
+            'smtp_port'     => 465,
+            'mailtype'      => 'html',
+            'charset'       => 'utf-8',
+            'smtp_crypto'   => 'ssl',
+            'crlf'          => "\r\n",
+            'newline'       => "\r\n"
+        ];
+
+        $this->load->library('email', $config);
+        $this->email->initialize($config);
+
+        $this->email->from('admin@step-ap.online', 'Pemkab Jember');
+        $email_penerima = $this->uri->segment('5');
+        $this->email->to($email_penerima);
+
+        $this->email->subject('Informasi Pengaduan');
+        //$this->email->message('click : <a href="' . base_url() . 'Lupa_Password/resetpassword?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '">activate</a>');
+
+        // Data Array ini untuk mengirim data ke halaman kirim email
+        // $data = array(
+        //     'no_penerima' => $_POST["no_user"],
+        //     'username' => $_POST["username"],
+        // );
+
+        //$body = $this->load->view('dinas/email/v_selesai', $data, true); // Untuk Menggabungkan halaman view ke body pesan
+
+        $this->email->message("Laporan Pengaduan Anda *Sedang Dalam Proses Tindak Lanjut* Kami Akan terus memberikan informasi terkait kelanjutan laporan pengaduan anda<br>Terimakasih."); // Isi Pesan dari Email
+
+        // Cek Apakah Email Berhasil dikirim apa tidak
+        if ($this->email->send()) {
+            return true;
+        } else {
+            echo $this->email->print_debugger();
+            die;
+        }
     }
 
     private function _sendWA_TindakLanjutPengaduan()
@@ -902,7 +1040,7 @@ class Admin extends CI_Controller
     // ================================= Pengaduan Diproses =======================================
     public function Tampil_Pengaduan_Diproses()
     {
-        $data['title'] = "Validasi Pengaduan";
+        $data['title'] = "Pengaduan Diproses";
         $data['menu'] = "laporan";
         $data['sub_menu'] = 'semua_laporan';
         $data['sub_menu_action'] = null;
@@ -921,7 +1059,7 @@ class Admin extends CI_Controller
 
     public function detail_pengaduan_diproses($id_laporan)
     {
-        $data['title'] = "Semua Laporan";
+        $data['title'] = "Pengaduan Diproses";
         $data['menu'] = "laporan";
         $data['sub_menu'] = 'semua_laporan';
         $data['sub_menu_action'] = null;
@@ -942,7 +1080,7 @@ class Admin extends CI_Controller
     // ================================= Pengaduan Dibatalkan =======================================
     public function Tampil_Pengaduan_Dibatalkan()
     {
-        $data['title'] = "Validasi Pengaduan";
+        $data['title'] = "Pengaduan Dibatalkan";
         $data['menu'] = "laporan";
         $data['sub_menu'] = 'semua_laporan';
         $data['sub_menu_action'] = null;
@@ -961,7 +1099,7 @@ class Admin extends CI_Controller
 
     public function detail_pengaduan_dibatalkan($id_laporan)
     {
-        $data['title'] = "Semua Laporan";
+        $data['title'] = "Pengaduan Dibatalkan";
         $data['menu'] = "laporan";
         $data['sub_menu'] = 'semua_laporan';
         $data['sub_menu_action'] = null;
@@ -982,7 +1120,7 @@ class Admin extends CI_Controller
     // ================================= Pengaduan Selesai =======================================
     public function Tampil_Pengaduan_Selesai()
     {
-        $data['title'] = "Validasi Pengaduan";
+        $data['title'] = "Pengaduan Selesai";
         $data['menu'] = "laporan";
         $data['sub_menu'] = 'semua_laporan';
         $data['sub_menu_action'] = null;
@@ -2394,8 +2532,9 @@ class Admin extends CI_Controller
         $this->load->view('dinas/template/footer_admin_view');
     }
 
-    public function laporan_valid($id = null)
+    public function laporan_valid($id = null, $telepon = null, $emailk = null)
     {
+        $this->_sendEmail_laporanValid($emailk);
         $this->_sendWA_LaporanValid();
         $status = '3';
         $this->db->set('status', $status);
@@ -2405,8 +2544,54 @@ class Admin extends CI_Controller
         redirect(site_url('Admin/Tampil_Pengaduan_Masuk_Dinas'));
     }
 
+    private function _sendEmail_laporanValid($emailk)
+    {
+        $config = [
+            'protocol'      => 'smtp',
+            'smtp_host'     => 'step-ap.online',
+            'smtp_user'     => 'admin@step-ap.online',
+            'smtp_pass'     => 'Stepapon@2020',
+            'smtp_port'     => 465,
+            'mailtype'      => 'html',
+            'charset'       => 'utf-8',
+            'smtp_crypto'   => 'ssl',
+            'crlf'          => "\r\n",
+            'newline'       => "\r\n"
+        ];
+
+        $this->load->library('email', $config);
+        $this->email->initialize($config);
+
+        $this->email->from('admin@step-ap.online', 'Pemkab Jember');
+        $email_penerima = htmlspecialchars($this->input->post('email', true));
+        $this->email->to($emailk);
+
+        $this->email->subject('Informasi Pengaduan');
+        //$this->email->message('click : <a href="' . base_url() . 'Lupa_Password/resetpassword?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '">activate</a>');
+
+        // Data Array ini untuk mengirim data ke halaman kirim email
+        // $data = array(
+        //     'no_penerima' => $_POST["no_user"],
+        //     'username' => $_POST["username"],
+        // );
+
+        //$body = $this->load->view('dinas/email/v_selesai', $data, true); // Untuk Menggabungkan halaman view ke body pesan
+
+        $this->email->message("Laporan Pengaduan Anda Telah di Validasi Oleh Dinas Terkait, Kami Akan Segera Memperbaiki Kuluhan Anda.<br>Kami Akan Terus Menginformasikan Terkait Pengaduan Yang Anda Laporkan."); // Isi Pesan dari Email
+
+        // Cek Apakah Email Berhasil dikirim apa tidak
+        if ($this->email->send()) {
+            return true;
+        } else {
+            echo $this->email->print_debugger();
+            die;
+        }
+    }
+
     public function laporan_tidak_valid($id = null)
     {
+
+        $this->_sendEmail_laporanTidakValid();
         $this->_sendWA_TidakValid();
         $status = '4';
         $this->db->set('status', $status);
@@ -2416,9 +2601,54 @@ class Admin extends CI_Controller
         redirect(site_url('Admin/Tampil_Pengaduan_Masuk_Dinas'));
     }
 
+    private function _sendEmail_laporanTidakValid()
+    {
+        $config = [
+            'protocol'      => 'smtp',
+            'smtp_host'     => 'step-ap.online',
+            'smtp_user'     => 'admin@step-ap.online',
+            'smtp_pass'     => 'Stepapon@2020',
+            'smtp_port'     => 465,
+            'mailtype'      => 'html',
+            'charset'       => 'utf-8',
+            'smtp_crypto'   => 'ssl',
+            'crlf'          => "\r\n",
+            'newline'       => "\r\n"
+        ];
+
+        $this->load->library('email', $config);
+        $this->email->initialize($config);
+
+        $this->email->from('admin@step-ap.online', 'Pemkab Jember');
+        $email_penerima = $this->uri->segment('5');
+        $this->email->to($email_penerima);
+
+        $this->email->subject('Informasi Pengaduan');
+        //$this->email->message('click : <a href="' . base_url() . 'Lupa_Password/resetpassword?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '">activate</a>');
+
+        // Data Array ini untuk mengirim data ke halaman kirim email
+        // $data = array(
+        //     'no_penerima' => $_POST["no_user"],
+        //     'username' => $_POST["username"],
+        // );
+
+        //$body = $this->load->view('dinas/email/v_selesai', $data, true); // Untuk Menggabungkan halaman view ke body pesan
+
+        $this->email->message("Laporan Pengaduan Anda <b>Tidak Valid</b> dan Telah di Validasi Oleh Dinas Terkait, Dengan ini Kami Membatalkan Laporan Pengaduan Anda.<br> Silahkan Laporkan Ulang Keluhan Anda dan berikan Keterangan Sebaik Mungkin.<br>Terimakasih."); // Isi Pesan dari Email
+
+        // Cek Apakah Email Berhasil dikirim apa tidak
+        if ($this->email->send()) {
+            return true;
+        } else {
+            echo $this->email->print_debugger();
+            die;
+        }
+    }
+
+
     public function Tampil_Tindak_Lanjut()
     {
-        $data['title'] = "Pengaduan Masuk";
+        $data['title'] = "Tindak Lanjut";
         $data['menu'] = "laporan";
         $data['sub_menu'] = 'semua_laporan';
         $data['sub_menu_action'] = null;
@@ -2478,7 +2708,7 @@ class Admin extends CI_Controller
 
         if ($this->Laporan_model->insert_laporan_selesai($data_user)) {
             $this->_sendWA_LaporanSelesai();
-            $this->_sendEmail();
+            $this->_sendEmail_laporanSelesai();
             $status = '6';
             $this->db->set('status', $status);
             $this->db->where('id_laporan', $id);
@@ -2562,55 +2792,106 @@ class Admin extends CI_Controller
         }
     }
 
+    private function _sendEmail_laporanSelesai()
+    {
+        $config = [
+            'protocol'      => 'smtp',
+            'smtp_host'     => 'step-ap.online',
+            'smtp_user'     => 'admin@step-ap.online',
+            'smtp_pass'     => 'Stepapon@2020',
+            'smtp_port'     => 465,
+            'mailtype'      => 'html',
+            'charset'       => 'utf-8',
+            'smtp_crypto'   => 'ssl',
+            'crlf'          => "\r\n",
+            'newline'       => "\r\n"
+        ];
+
+        $this->load->library('email', $config);
+        $this->email->initialize($config);
+
+        $this->email->from('admin@step-ap.online', 'Pemkab Jember');
+        $email_penerima = htmlspecialchars($this->input->post('email', true));
+        $this->email->to($email_penerima);
+
+        $this->email->subject('Informasi Pengaduan');
+        //$this->email->message('click : <a href="' . base_url() . 'Lupa_Password/resetpassword?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '">activate</a>');
+
+        // Data Array ini untuk mengirim data ke halaman kirim email
+        // $data = array(
+        //     'no_penerima' => $_POST["no_user"],
+        //     'username' => $_POST["username"],
+        // );
+
+        //$body = $this->load->view('dinas/email/v_selesai', $data, true); // Untuk Menggabungkan halaman view ke body pesan
+
+        $this->email->message("Terimakasih Sudah Melaporakan Keluhan Anda Pada kami PEMKAB JEMBER.<br>Laporan Pengaduan Anda Telah Selesai / Diperbaiki."); // Isi Pesan dari Email
+
+        // Cek Apakah Email Berhasil dikirim apa tidak
+        if ($this->email->send()) {
+            return true;
+        } else {
+            echo $this->email->print_debugger();
+            die;
+        }
+    }
+
+
+
+
+
     // Method Untuk Mengirim Email
-    // private function _sendEmail()
-    // {
-    //     $config = [
-    //         'protocol' => 'smtp',
-    //         'smtp_host' => 'ssl://smtp.googlemail.com',
-    //         'smtp_user' => 'amaliacollection87@gmail.com',
-    //         'smtp_pass' => 'indah12345',
-    //         'smtp_port' => '465',
-    //         'mailtype' => 'html',
-    //         'charset' => 'utf-8',
-    //         'newline' => "\r\n"
-    //     ];
+    private function _sendEmail2()
+    {
+        $config = [
+            'protocol'      => 'smtp',
+            'smtp_host'     => 'step-ap.online',
+            'smtp_user'     => 'admin@step-ap.online',
+            'smtp_pass'     => 'Stepapon@2020',
+            'smtp_port'     => 465,
+            'mailtype'      => 'html',
+            'charset'       => 'utf-8',
+            'smtp_crypto'   => 'ssl',
+            'crlf'          => "\r\n",
+            'newline'       => "\r\n"
+        ];
 
-    //     $this->load->library('email', $config);
+        $this->load->library('email', $config);
+        $this->email->initialize($config);
 
-    //     $this->email->from('amaliacollection87@gmail.com', 'Amalia Collection');
-    //     $this->email->to($this->input->post('email'));
+        $this->email->from('admin@step-ap.online', 'Amalia Collection');
+        $this->email->to('frifqi11@gmail.com');
 
-    //     $this->email->subject('Konfirmasi Pemesanan');
-    //     //$this->email->message('click : <a href="' . base_url() . 'Lupa_Password/resetpassword?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '">activate</a>');
+        $this->email->subject('Konfirmasi Pemesanan');
+        //$this->email->message('click : <a href="' . base_url() . 'Lupa_Password/resetpassword?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '">activate</a>');
 
-    //     // Data Array ini untuk mengirim data ke halaman kirim email
-    //     $data = array(
-    //         'no_penerima' => $_POST["no_user"],
-    //         'username' => $_POST["username"],
-    //     );
+        // Data Array ini untuk mengirim data ke halaman kirim email
+        // $data = array(
+        //     'no_penerima' => $_POST["no_user"],
+        //     'username' => $_POST["username"],
+        // );
 
-    //     $body = $this->load->view('dinas/email/v_selesai', $data, true); // Untuk Menggabungkan halaman view ke body pesan
+        //$body = $this->load->view('dinas/email/v_selesai', $data, true); // Untuk Menggabungkan halaman view ke body pesan
 
-    //     $this->email->message($body); // Isi Pesan dari Email
+        $this->email->message("BISA"); // Isi Pesan dari Email
 
-    //     // Cek Apakah Email Berhasil dikirim apa tidak
-    //     if ($this->email->send()) {
-    //         return true;
-    //     } else {
-    //         //echo $this->email->print_debugger();
-    //         die;
-    //     }
-    // }
+        // Cek Apakah Email Berhasil dikirim apa tidak
+        if ($this->email->send()) {
+            return true;
+        } else {
+            echo $this->email->print_debugger();
+            die;
+        }
+    }
 
     // fungsi proses send email
     private function _sendEmail()
     {
         $config = [
             'protocol'      => 'smtp',
-            'smtp_host'     => 'ssl://smtp.googlemail.com',
-            'smtp_user'     => 'amaliacollection87@gmail.com',
-            'smtp_pass'     => 'indah12345',
+            'smtp_host'     => 'step-ap.online',
+            'smtp_user'     => 'admin@step-ap.online',
+            'smtp_pass'     => 'Stepapon@2020',
             'smtp_port'     => 465,
             'mailtype'      => 'html',
             'charset'       => 'utf-8',
@@ -2927,7 +3208,7 @@ class Admin extends CI_Controller
     // =============================== SESI LAP ====================================================
     public function laporann()
     {
-        $data['title'] = "Tambah Pengguna";
+        $data['title'] = "Laporan";
         $data['menu'] = "pengguna";
         $data['sub_menu'] = "tambah_pengguna";
         $data['sub_menu_action'] = null;
@@ -2943,7 +3224,7 @@ class Admin extends CI_Controller
 
     public function filter_laporan()
     {
-        $data['title'] = "Tambah Pengguna";
+        $data['title'] = "Laporan";
         $data['menu'] = "pengguna";
         $data['sub_menu'] = "tambah_pengguna";
         $data['sub_menu_action'] = null;
@@ -2963,7 +3244,7 @@ class Admin extends CI_Controller
 
     public function laporanbytanggal()
     {
-        $data['title'] = "Tambah Pengguna";
+        $data['title'] = "Laporan Dari Tanggal";
         $data['menu'] = "pengguna";
         $data['sub_menu'] = "tambah_pengguna";
         $data['sub_menu_action'] = null;
@@ -2982,7 +3263,7 @@ class Admin extends CI_Controller
 
     public function laporanbytahun()
     {
-        $data['title'] = "Tambah Pengguna";
+        $data['title'] = "Laporan Tahun";
         $data['menu'] = "pengguna";
         $data['sub_menu'] = "tambah_pengguna";
         $data['sub_menu_action'] = null;

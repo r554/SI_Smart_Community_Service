@@ -209,7 +209,7 @@
   					</div>
   				</div>
   				<div class="col-lg-4">
-  					<img src="<?= base_url() . 'assets/img/' . $detail_laporan['foto']; ?>" alt="" class="img-fluid">
+  					<img src="<?= base_url() . 'assets/img/' . $detail_laporan['foto_laporan']; ?>" alt="" class="img-fluid">
   				</div>
   			</div>
 

@@ -133,10 +133,10 @@
   									<div class="form-group row">
   										<div class="col-sm-10 text-center">
   											<?php if ($detail_laporan['status'] == 2) { ?>
-  												<a href="<?= base_url('Admin/tindak_lanjut/') . $detail_laporan['id_laporan'] . '/' . $detail_laporan['telepon']  ?>"><button type="button" class="btn btn-info btn-md">Tindak Lanjut Pengaduan</button></a>
+  												<a href="<?= base_url('Admin/tindak_lanjut/') . $detail_laporan['id_laporan'] . '/' . $detail_laporan['telepon'] . '/' . $detail_laporan['email']  ?>"><button type="button" class="btn btn-info btn-md">Tindak Lanjut Pengaduan</button></a>
   												<button type="button" class="btn btn-danger btn-md ml-4" data-toggle="modal" data-target="#TolakPengaduan">Tolak Pengaduan</button>
   											<?php } elseif ($detail_laporan['status'] == 3) { ?>
-  												<a href="<?= base_url('Admin/tindak_lanjut/') . $detail_laporan['id_laporan'] . '/' . $detail_laporan['telepon']  ?>"><button type="button" class="btn btn-info btn-md">Tindak Lanjut Pengaduan</button></a>
+  												<a href="<?= base_url('Admin/tindak_lanjut/') . $detail_laporan['id_laporan'] . '/' . $detail_laporan['telepon'] . '/' . $detail_laporan['email']  ?>"><button type="button" class="btn btn-info btn-md">Tindak Lanjut Pengaduan</button></a>
   												<button type="button" class="btn btn-danger btn-md ml-4" data-toggle="modal" data-target="#TolakPengaduan">Tolak Pengaduan</button>
   											<?php } elseif ($detail_laporan['status'] == 4) { ?>
   												<button type="button" class="btn btn-danger btn-md ml-4" data-toggle="modal" data-target="#TolakPengaduan">Tolak Pengaduan</button>
@@ -197,7 +197,7 @@
   					</div>
   				</div>
   				<div class="col-lg-4">
-  					<img src="<?= base_url() . 'assets/img/' . $detail_laporan['foto']; ?>" alt="" class="img-fluid">
+  					<img src="<?= base_url() . 'assets/img/' . $detail_laporan['foto_laporan']; ?>" alt="" class="img-fluid">
   				</div>
   			</div>
 

@@ -1,6 +1,6 @@
 <div class="login-box">
   <div class="login-logo">
-    <a href="<?= base_url('login'); ?>">PELAPORAN <b>Bakesbangpol</b></a>
+    <a href="<?= base_url('login'); ?>">PENGADUAN<b> Pemkab Jember</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
@@ -10,8 +10,8 @@
       <?= $this->session->flashdata('message'); ?>
 
       <form action="" role="form" id="recoverForm" method="post">
-      <?php echo form_error('password', '<small class="text-danger">', '</small>'); ?>
-      <input type="hidden" name="email" value="<?= $email; ?>">
+        <?php echo form_error('password', '<small class="text-danger">', '</small>'); ?>
+        <input type="hidden" name="email" value="<?= $email; ?>">
         <div class="input-group form-group mb-3">
           <input type="password" name="password" class="form-control" placeholder="New Password" required>
           <div class="input-group-append">
@@ -31,7 +31,7 @@
         </div>
         <div class="row">
           <div class="col-12">
-            <button type="submit" class="btn btn-primary btn-block">Change password</button>            
+            <button type="submit" class="btn btn-primary btn-block">Change password</button>
           </div>
           <!-- /.col -->
         </div>
