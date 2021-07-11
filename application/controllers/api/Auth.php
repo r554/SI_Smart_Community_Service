@@ -35,8 +35,8 @@ class Auth extends CI_Controller
         parent::__construct();
         $this->__resTraitConstruct();
 
-        $this->load->model('Auth_model');
-        $this->load->model('Laporan_model');
+        $this->load->model('apimobile/Auth_model');
+        $this->load->model('apimobile/Laporan_model');
 
         // Configure limits on our controller methods
         // Ensure you have created the 'limits' table and enabled 'limits' within application/config/rest.php
@@ -47,12 +47,12 @@ class Auth extends CI_Controller
 
     public function index_post()
     {
-        $email = $this->post('email');
+        $nik = $this->post('nik');
         $password = $this->post('password');
 
-        $userData = $this->db->get_where('tb_user', ['email' => $email])->row_array();
+        $userData = $this->db->get_where('tb_user', ['nik' => $nik])->row_array();
 
-        // apabila email ada
+        // apabila nik ada
         if ($userData) {
             // cek password
             if (password_verify($password, $userData['password'])) {
@@ -77,7 +77,7 @@ class Auth extends CI_Controller
         } else {
             $this->response([
                 'status' => false,
-                'message' => 'Email tidak ditemukan'
+                'message' => 'NIK tidak ditemukan'
             ], 401);
         }
     }
@@ -168,15 +168,15 @@ class Auth extends CI_Controller
     public function register_post()
     {
         $this->load->model('Auth_model');
-        $email = $this->post('email');
+        $nik = $this->post('nik');
 
-        // cek apakah email sudah terdaftar
-        $user = $this->Auth_model->getUserByEmail($email);
+        // cek apakah nik sudah terdaftar
+        $user = $this->Auth_model->getUserByNIK($nik);
 
         if ($user) {
             $this->response([
                 'status' => false,
-                'message' => 'Email telah terdaftar',
+                'message' => 'NIK telah terdaftar',
                 'data' => $user
             ], 401);
         }
@@ -185,10 +185,10 @@ class Auth extends CI_Controller
         $data_user = [
             'level' => 2,
             'username' => $this->post('username'),
-            'email' => $email,
+            'nik' => $nik,
             'password' => password_hash($this->post('password'), PASSWORD_DEFAULT),
             'telepon' => $this->post('telepon'),
-            'nik' => $this->post('nik'),
+            'email' => $this->post('email'),
             'alamat' => $this->post('alamat'),
             'jenis_kelamin' => $this->post('jenis_kelamin'),
             'foto' => 'no-image.jpg',

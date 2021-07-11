@@ -35,9 +35,9 @@ class Laporan extends CI_Controller
         parent::__construct();
         $this->__resTraitConstruct();
 
-        $this->load->model('Auth_model');
-        $this->load->model('Laporan_model');
-        $this->load->model('Pemberitahuan_model');
+        $this->load->model('apimobile/Auth_model');
+        $this->load->model('apimobile/Laporan_model');
+        $this->load->model('apimobile/Pemberitahuan_model');
 
         // Configure limits on our controller methods
         // Ensure you have created the 'limits' table and enabled 'limits' within application/config/rest.php
@@ -133,6 +133,7 @@ class Laporan extends CI_Controller
             if ($data_laporan) {
                 $data_response = [
                     'id_laporan' => $data_laporan['id_laporan'],
+                    'id_dinas' => $data_laporan['id_dinas'],
                     'id_user' => $data_laporan['id_user'],
                     'username' => $data_laporan['username'],
                     'judul' => $data_laporan['judul'],
@@ -237,47 +238,7 @@ class Laporan extends CI_Controller
                 'laporan' => $laporan,
             ], 200);
         } 
-        
-        if ($tipe == 'wilayah'){
-            $laporan = $this->Laporan_model->getLaporan('wilayah', $wilayah);
-            $laporan_user = $this->Laporan_model->getLaporan('id_user', $id_user);
-            $pelapor = $this->Auth_model->getUser('level', 2);
-            $pemberitahuan = $this->Pemberitahuan_model->getPemberitahuan('id_penerima_not_readed', $id_user);
 
-            if (!$laporan) {
-                $count_laporan = 0;
-            } else {
-                $count_laporan = count($laporan);
-            }
-
-            if (!$laporan_user) {
-                $count_laporan_user = 0;
-            } else {
-                $count_laporan_user = count($laporan_user);
-            }
-
-            if (!$pelapor) {
-                $count_pelapor = 0;
-            } else {
-                $count_pelapor = count($pelapor);
-            }
-
-            if (!$pemberitahuan) {
-                $count_pemberitahuan = 0;
-            } else {
-                $count_pemberitahuan = count($pemberitahuan);
-            }
-
-            $this->response([
-                'status' => true,
-                'message' => 'Data Berhasil Didapatkan',
-                'count_laporan' => $count_laporan,
-                'count_laporan_user' => $count_laporan_user,
-                'count_pelapor' => $count_pelapor,
-                'count_pemberitahuan' => $count_pemberitahuan,
-                'laporan' => $laporan,
-            ], 200);
-        }
     }
 
     // test
@@ -287,14 +248,27 @@ class Laporan extends CI_Controller
 
         $imgName = uniqid() . '.png';
         $path = 'assets/img/' . $imgName;
+        $status = '1';
 
         $pengguna = $this->db->get_where('tb_user', ['id_user' => $id_user])->row_array();
 
         if ($pengguna) {
             $foto_laporan = $this->post('foto');
 
+            if ($this->post('id_dinas') == "Dinas Perhubungan") {
+                $id_dinas = 1;
+            } elseif ($this->post('id_dinas') == "Dinas Lingkungan Hidup") {
+                $id_dinas = 2;
+            }elseif ($this->post('id_dinas') == "Sosial") {
+                $id_dinas = 3;
+            }elseif ($this->post('id_dinas') == "Kependudukan") {
+                $id_dinas = 4;
+            }
+            
+
             $data = array(
                 'id_user' => $id_user,
+                'id_dinas' => $id_dinas,
                 'judul' => $this->post('judul'),
                 'deskripsi' => $this->post('deskripsi'),
                 'alamat' => $this->post('alamat'),
@@ -302,7 +276,9 @@ class Laporan extends CI_Controller
                 'lng' => $this->post('lng'),
                 'foto' => $imgName,
                 'dibuat_pada' => time(),
-                'tanggal' => date('Y-m-d', time())
+                'tanggal' => date('Y-m-d', time()),
+                'status' => $status,
+                
             );
 
             // var_dump(file_put_contents($path, base64_decode($foto_laporan))); die;

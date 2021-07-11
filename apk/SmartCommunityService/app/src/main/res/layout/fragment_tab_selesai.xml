@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="Riwayat.TabSelesai">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_history_pengajuan_nikah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_history_perjanjian"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rv_history_pengajuan_nikah"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_history_skck"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rv_history_perjanjian"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_history_suket_biodata"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rv_history_skck"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_history_suket_domisili"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rv_history_suket_biodata"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_history_suket_domisili_usaha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rv_history_suket_domisili"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_history_suket_kelahiran"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rv_history_suket_domisili_usaha"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_history_suket_kematian"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rv_history_suket_kelahiran"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_history_suket_pindah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rv_history_suket_kematian"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_history_suket_satunama"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rv_history_suket_pindah"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_history_suket_tidak_mampu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rv_history_suket_satunama"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_history_ahli_waris"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rv_history_suket_tidak_mampu"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_history_bepergian"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rv_history_ahli_waris"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_history_kehilangan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rv_history_bepergian"/>
+        </RelativeLayout>
+
+
+
+    </ScrollView>
+
+</RelativeLayout>

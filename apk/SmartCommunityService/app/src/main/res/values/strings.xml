@@ -1,0 +1,77 @@
+<resources>
+    <string name="app_name">Smart Community Service</string>
+    <string name="loginLogin">Login</string>
+    <string name="loginHi">Hi,</string>
+    <string name="loginWelcome">Welcome</string>
+    <string name="loginPleaseSignIn">Please sign in to continue</string>
+    <string name="loginNIK">NIK</string>
+    <string name="loginEmail">Email</string>
+    <string name="loginPassword">Password</string>
+    <string name="loginLupaPassword">Lupa password?</string>
+    <string name="loginLoginButtonText">LOGIN</string>
+    <string name="forgotSendRequest">Request New Password</string>
+    <string name="forgotForgot">Forgot</string>
+    <string name="forgotInstructionsDetail">Masukkan email anda, dan kami akan mengirim link untuk mereset password anda</string>
+    <string name="forgotPasswordText">Password</string>
+    <string name="forgotUnlockedIcon">unlocked icon</string>
+    <string name="nav_home">Beranda</string>
+    <string name="nav_laporan">Riwayat</string>
+    <string name="nav_user">Pengguna</string>
+    <string name="nav_settings">Rubah Password</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">close navigation drawer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="nav_profile">Profil</string>
+    <string name="profile_username">Username</string>
+    <string name="profileImageDescription">UserProfileImage</string>
+    <string name="profileLevel">Admin</string>
+    <string name="profileIconPeople">iconTotalPeople</string>
+    <string name="profileTotalLaporan">100 Laporan</string>
+    <string name="profileTotalUser">10 users</string>
+    <string name="add_user_username">Username</string>
+    <string name="nav_logout">Log Out</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tab_text_1">Menunggu</string>
+    <string name="tab_text_2">Diproses</string>
+    <string name="tab_text_3">Selesai</string>
+    <string name="tab_text_4">DiTolak</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas orci felis, elementum id lobortis nec, commodo pellentesque nunc. Nam ac cursus enim. Duis et diam cursus dolor ultricies pretium. Vivamus non quam varius, tristique ligula nec, aliquam mi. Donec convallis, mi ut vulputate porta, risus lectus mollis lorem, ut commodo massa lorem vehicula lacus. Nulla facilisi. Fusce sodales neque vel auctor lacinia. Nulla rutrum suscipit sapien quis molestie. Duis sed bibendum enim, id varius libero. Cras nulla libero, maximus rutrum eros id, hendrerit maximus leo. Aliquam a faucibus urna. Curabitur rhoncus suscipit finibus. Etiam sit amet feugiat nisl, id varius ipsum.</string>
+    <string name="nav_pemberitahuan">Notifikasi</string>
+    <string name="title_activity_maps_test">Map</string>
+    <string-array name="wilayah_array">
+        <item>Semua Wilayah</item>
+        <item>Ampelgading</item>
+        <item>Bantur</item>
+        <item>Bululawang</item>
+        <item>Dampit</item>
+        <item>Dau</item>
+        <item>Donomulyo</item>
+        <item>Gedangan</item>
+        <item>Gondanglegi</item>
+        <item>Jabung</item>
+        <item>Kalipare</item>
+        <item>Karangploso</item>
+        <item>Kasembon</item>
+        <item>Kepanjen</item>
+        <item>Kromengan</item>
+        <item>Lawang</item>
+        <item>Ngajum</item>
+        <item>Ngantang</item>
+        <item>Pagak</item>
+        <item>Pagelaran</item>
+        <item>Pakis</item>
+        <item>Pakisaji</item>
+        <item>Poncokusumo</item>
+        <item>Pujon</item>
+        <item>Singosari</item>
+        <item>Sumbermanjing</item>
+        <item>Sumberpucung</item>
+        <item>Tajinan</item>
+        <item>Tirtoyudo</item>
+        <item>Tumpang</item>
+        <item>Turen</item>
+        <item>Wagir</item>
+        <item>Wajak</item>
+        <item>Wonosari</item>
+    </string-array>
+</resources>

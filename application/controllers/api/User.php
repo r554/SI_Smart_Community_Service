@@ -31,8 +31,8 @@ class User extends CI_Controller {
         parent::__construct();
         $this->__resTraitConstruct();
 
-        $this->load->model('Pembayaran_model');
-        $this->load->model('Kamar_model');
+        $this->load->model('apimobile/Pembayaran_model');
+        $this->load->model('apimobile/Kamar_model');
 
         // Configure limits on our controller methods
         // Ensure you have created the 'limits' table and enabled 'limits' within application/config/rest.php

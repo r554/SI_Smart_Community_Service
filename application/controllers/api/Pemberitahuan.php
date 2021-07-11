@@ -35,8 +35,8 @@ class Pemberitahuan extends CI_Controller
         parent::__construct();
         $this->__resTraitConstruct();
 
-        $this->load->model('Pemberitahuan_model');
-        $this->load->model('Auth_model');
+        $this->load->model('apimobile/Pemberitahuan_model');
+        $this->load->model('apimobile/Auth_model');
 
         // Configure limits on our controller methods
         // Ensure you have created the 'limits' table and enabled 'limits' within application/config/rest.php
